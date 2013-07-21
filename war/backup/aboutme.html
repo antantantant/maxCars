@@ -1,0 +1,128 @@
+<html>
+	<head profile="http://www.w3.org/2006/03/hcard">
+		<title>Yi Ren, University of Michigan ODE</title>
+		<link href="Yiren.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="scripts/jquery-latest.min.js"></script>
+		<script type="text/javascript" src="scripts/twitter.min.js"></script>
+		<script type="text/javascript" src="scripts/twitterlib.js"></script>
+		<script type="text/javascript" src="scripts/webGL_preamble.js"></script>
+		<script type="text/javascript" src="scripts/bezierpatch.js"></script>
+		<script type="text/javascript" src="scripts/carModel.js"></script>
+		<script type="text/javascript" src="scripts/matchbox.js"></script>
+		<script type="text/javascript" src="scripts/model.js"></script>
+		<script type="text/javascript" src="scripts/yiren.js"></script>
+				
+		<script type="text/javascript">
+		var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-22933052-3']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+
+		<script>
+			$(document).ready(function() {
+				getTwitters('tweet', { 
+				  id: 'renyiumich', 
+				  count: 1, 
+				  enableLinks: false, 
+				  ignoreReplies: true, 
+				  clearContents: false,
+				  template: '%text% <br/><a href="http://twitter.com/%user_screen_name%/statuses/%id_str%/">%time%</a>'
+				});
+				$('.date').each(function(index) {
+					var dateInfo = $(this).text().split("/");
+					var month = parseInt(dateInfo[0]);
+					var day = parseInt(dateInfo[1]);
+					var year = parseInt(dateInfo[2]);
+			                    var eventDate = new Date();
+			                    eventDate.setFullYear(year, month-1, day);
+					var today = new Date();
+			                        today.setHours(0,0,0,0);
+			                        if (eventDate < today) {
+			                              $(this).parent().addClass("old");
+			                        }
+					$(this).text(month + '/' + day);
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div id="title">
+			<b><a class="links", href="http://ode.engin.umich.edu/people/yiren/yiren.html">Yi Ren (Max)</a></b>
+		</div>
+		<div id="info">
+			Postdoctoral Fellow
+			<br> <a class="links" href="http://ode.engin.umich.edu">Optimal Design Laboratory</a>, 
+			<br> <a class="links" href="http://www.umich.edu">University of Michigan</a>.
+			<br> <a class="links" href="mailto:yiren@umich.edu">yiren at umich.edu</a>
+	
+			<br><br>
+			Ph.D., <a class="links" href="http://me.engin.umich.edu/">Mechanical Engineering</a>  
+			<br>
+			<a class="links", href="http://www.umich.edu/">University of Michigan</a>, 2012
+			<br>
+			Advisors: <a class="links" href="http://www-personal.umich.edu/~pyp/">Panos Y. Papalambros</a>
+		</div>
+		
+		<div id="headline">
+			<ul>
+				<li>
+					<a class="unselected" href="Yiren.html">home</a>
+				</li>
+				<li>
+					<a class="unselected" href="publication.html">publications</a>
+				</li>
+				<li>
+					<a class="selected" href="">about me</a>
+				</li>				
+			</ul>
+		</div>
+		
+		<div id="content">
+			<div id="aboutme">
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<img src="image/me2012.png" width="120px" >
+							</td>
+							<td>
+								<p>I got my Ph.D. in mechanical engineering from the University of Michigan and B.S. in automotive engineering from Tsinghua University, China.
+								I consider human inspiration and artificial intelligence as two necessary ingredients of design and enjoy experimenting their mixtures. 
+								Out of research I am a serious soccer fan and love drawing. 
+								</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>			
+		</div>
+		<div id="fancyblock">
+			<script>
+				$(window).load( function() {
+// 					$.getScript("scripts/webGL_preamble.js");
+// 					$.getScript("scripts/bezierpatch.js");
+// 					$.getScript("scripts/carModel.js");
+// 					$.getScript("scripts/matchbox.js");
+// 					$.getScript("scripts/model.js");
+// 					$.getScript("scripts/yiren.js");
+					ini_fancy("3dmodel");
+				});
+			</script>
+		</div>
+		<div id="tweetdiv">
+			<div id="tweet" style="padding: 0;">
+				Twitter: <a class="links" href="http://www.twitter.com/renyiumich">@renyiumich</a>	
+			</div>
+		</div>
+		
+		<div id="footnote">
+			Last update of this site: Mar 02 2012. Tested on <a href="www.google.com/chrome">Chrome</a> only.
+		</div>	
+	</body>
+</html>

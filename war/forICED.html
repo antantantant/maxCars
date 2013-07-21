@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>maxDesign</title>
+	<link href="css/forICED.css" rel="stylesheet" type="text/css" />
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<link href="css/spinner.css" rel="stylesheet" type="text/css" />
+	<link href="css/ui-darkness/jquery-ui-1.9.1.custom.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="scripts/jquery-latest.min.js"></script>	
+	<script type="text/javascript" src="scripts/jquery-ui-1.9.1.custom.min.js"></script>
+	<script type="text/javascript" src="scripts/three.js"></script>
+	<script type="text/javascript" src="scripts/Detector.js"></script>
+	<script type="text/javascript" src="scripts/spinner.js"></script>
+	<script type="text/javascript" src="scripts/carModel.js"></script>
+	<script type="text/javascript" src="scripts/model_new.js"></script>
+	<script type="text/javascript" src="scripts/matchbox.js"></script>
+	<script type="text/javascript" src="scripts/bezierpatch.js"></script>
+	<script type="text/javascript" src="scripts/utility2.js"></script>
+
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-22933052-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>	
+</head>
+<body>
+	<div id="above" class="marker" hidden="hidden">
+		<div style="padding:20px 80px 0 80px;"><a style="font-size:150%;color:#999999;">Below you see two groups of sliders: 
+		Those on the left tunes the roof area of the model, and those on the right the frontal part.<br><br></a>
+		<a style="font-size:150%;color:#ADD8E6;">Label(s) </a><a style="font-size:150%;color:#999999;"> can be added to reflect your design intention. For example, you can label your design as "luxury" or
+		"dynamic". <br>
+		To add a label, simply click the "ADD LABEL" button. You can remove an existing label by clicking on it. At most four labels can be added to your design.</a><br><br>
+		<a style="font-size:150%;color:#999999;">You can change model </a><a style="font-size:150%;color:#ADD8E6;"> color </a><a style="font-size:150%;color:#999999;"> 
+		by clicking the color blocks at the bottom right.</a><br><br>
+		<a style="font-size:150%;color:#999999;">Please click "SUBMIT" and confirm once you finalized your design.</a>
+		</div>
+		<div id="cbutton" class="done active"><a>Got it</a></div>
+	</div>
+	<div id="below" class="marker">
+		<div style="padding:20px 80px 0 80px;"><a style="font-size:150%;color:#999999;">Welcome to oCar! This is a web platform created to build your own 3D car models.<br><br> 
+		Try to rotate the model above before you continue.<br><br>
+		Please use the latest version of </a> <a href="https://www.google.com/intl/en/chrome/browser/" style="text-decoration:none; font-size:150%;color:#ADD8E6;"> Chrome </a> 
+		<a style="font-size:150%;color:#999999;"> if the page is not loaded correctly or WebGL is missing.</a></div>
+		<div id="cbutton" class="continue active"><a>Continue</a></div>
+	</div>
+	<div id="finish" class="marker" hidden="hidden">
+		<div style="padding:20px 80px 0 80px;"><a style="font-size:150%;color:#999999;">Your design is submitted. Again, thank you for contributing to this project. 
+		You may continue with new designs.</a></div>
+		<div id="cbutton" class="restart active"><a>Done</a></div>
+	</div>
+	<div id="container">
+	<h1 style="color:#777777">oCar - ICED Test</h1>
+		<div id="createframe">
+		</div>
+	<div id="controlframe">
+		<div id="slidecontrolframe"><div id="slider_roof"></div><div id="slider_hood"></div></div>
+		<div id="spinner"></div>
+		<div id="labelframe"></div>
+		<div id="cbutton" class="addlabel active"><a>Add label</a></div>
+		<div id="cbutton" class="submit active"><a>Submit</a></div>
+		<div id="cbutton" class="confirm active" hidden="hidden"><a>Confirm</a></div>
+		<div id="cbutton" class="cancel active" hidden="hidden"><a>Cancel</a></div>
+		<div id="#003866" class="palette" style="left:68%;"></div>
+		<div id="#CC0000" class="palette" style="left:73%;"></div>
+		<div id="#eeeeee" class="palette" style="left:78%;"></div>
+		<div id="#222222" class="palette" style="left:83%;"></div>
+	</div>
+	<div id="dialog" title="Label your design" hidden="hidden">
+    	New label:      <input type="text" name="label">
+    	<div id="cbutton" class="confirmlabel active"><a>Confirm</a></div>
+		<div id="cbutton" class="cancellabel active"><a>Cancel</a></div>
+	</div>
+	
+ 	<script type="text/javascript">
+		C = new create();
+		var i;
+ 		for(i=0;i<p;i++){
+ 			var str = "slider"+i;
+ 			var options = {
+ 					 orientation: "vertical",
+ 					 max: 1,
+ 					 min: 0,
+ 					 step: 0.05,
+ 					 value: C.X[0][i],
+ 	 	 			 slide : function(e, ui) {
+ 	 	 				var id = parseInt(this.id.slice(6,this.id.length));
+ 	 	 			 	C.X[0][id] = ui.value;
+ 	 	 			 	C.X_[0][id] = ui.value;
+ 	 	 			 	C.update();
+ 	 	 			 },
+ 	 	 			 change : function(e, ui) {
+ 	 	 			 }
+ 			};
+ 			if(i<8){
+ 				$("#slider_roof").append("<div id="+str+" style='background:#666666;margin-left:5%;margin-right:3%;margin-top:2%;float:left;'></div>");
+ 			}
+ 			else{
+ 				$("#slider_hood").append("<div id="+str+" style='background:#666666;margin-left:5%;margin-right:3%;margin-top:2%;float:left;'></div>");
+ 			}
+ 			$("#"+str).slider(options);
+ 		}
+ 		wspinner = new Spinner($('#spinner')[0], 'white');
+ 		wspinner.show();
+ 		L = new label();
+		$("div#cbutton").mouseover(function(){
+			if ($(this).is(".active")){$(this).removeClass("active").addClass("highlight");}});
+		$("div#cbutton").mouseout(function(){
+			if ($(this).is(".highlight")){$(this).addClass("active").removeClass("highlight");}});
+		
+ 		$("div#cbutton.submit").click(function(){
+			if($("div#cbutton.submit").is(".highlight")){
+				$("div#cbutton.submit").hide();
+				$("div#cbutton.confirm").show();
+				$("div#cbutton.cancel").show();
+			}});
+ 		$("div#cbutton.addlabel").click(function(){
+ 			if($("div#cbutton.addlabel").is(".highlight")){
+ 				$( "#dialog" ).dialog();
+ 			}});
+ 		$("div#cbutton.confirmlabel").click(function(){
+			var label = $("input")[0].value;
+			for(var i=0;i<C.label.length;i++){
+				if(C.label[i]==label){
+					return;
+				}
+			}
+			$("#labelframe").append("<div id='label' class='"+C.label.length+"' onclick='removeLabel("+C.label.length+");'><a>"+label+"</a></div>");
+			C.label.push(label);
+			if(C.label.length>3){
+				$("div#cbutton.addlabel").removeClass("active");
+			}
+			$( "#dialog" ).dialog('close');
+		});
+ 		function removeLabel(id){
+ 			C.label.splice(id,1);
+ 			$($("div#label")[id]).remove();
+ 			if(C.label.length<4){$("div#cbutton.addlabel").addClass("active");}
+ 		}
+ 		$("div#cbutton.cancellabel").click(function(){
+			$( "#dialog" ).dialog('close');
+		});
+ 		
+ 		
+ 		
+		$("div#cbutton.confirm").click(function(){
+			wspinner.show();
+			C.store();
+			$("div#finish.marker").show();
+			$("div#cbutton.confirm").hide();
+			$("div#cbutton.cancel").hide();
+			$("div#cbutton.submit").show();
+		});
+		$("div#cbutton.cancel").click(function(){
+			$("div#cbutton.confirm").hide();
+			$("div#cbutton.cancel").hide();
+			$("div#cbutton.submit").show();
+		});
+		for (var i=0;i<$(".palette").length;i++){
+			var a = $($(".palette")[i]);
+			a.css({'background-color':a.attr('id')});
+			a.click(function(){
+				var str = this.attributes[0].value;
+				carUnselectedColor = parseInt(str.slice(1,str.length),16);
+				carSelectedColor = carUnselectedColor+1118481;
+				C.color = carUnselectedColor;
+				var lc = create_scene.scene.children.length;
+				create_scene.scene.__objects[2].children[0].material.color.setHex(carUnselectedColor);
+				create_scene.renderer.clear();
+				create_scene.renderer.render(create_scene.scene,create_scene.camera);
+			});
+		}
+		
+		$("div#cbutton.continue").click(function(){
+			$("div#above.marker").show();
+			$("div#below.marker").hide();
+		});
+		$("div#cbutton.done").click(function(){
+			$("div#above.marker").hide();
+		});
+		$("div#cbutton.restart").click(function(){
+			$("div#finish.marker").hide();
+		});
+	</script>
+	
+	<div class="share">
+		<ul>
+			<li class="twitter">
+				<span class="icon"><em>Share this on Twitter</em></span>
+				<span class="text">
+					<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yirenumich.appspot.com/hello.html" data-text="" data-count="horizontal" data-via="renyiumich">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				</span>
+			</li>
+			<li class="google">
+				<span class="icon"><em>Google Plus 1</em></span>
+				<span class="text"><g:plusone size="medium" href="http://yirenumich.appspot.com/hello.html"></g:plusone></span>
+			</li>
+			<li class="facebook">
+				<span class="icon"><em>Like this on Facebook</em></span>
+				<span class="text"><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fyirenumich.appspot.com%2Fhello.html&amp;layout=button_count&amp;show_faces=true&amp;width=110&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe></span>
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+		{lang: 'en-GB'}
+	</script>
+</body>
+</html>

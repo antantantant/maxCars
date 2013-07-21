@@ -1,0 +1,114 @@
+@charset "UTF-8";
+.deck-container {
+  font-family: "MyriadProRegular", sans-serif;
+  font-size: 1.75em;
+  background: #fff;
+}
+.deck-container .slide {
+  background: #fff;
+}
+.deck-container .slide h1 {
+  color: #000;
+}
+.deck-container .slide h2 {
+  color: #68838B;
+  border-bottom-color: #ccc;
+}
+.deck-container .slide h3 {
+  color: #888;
+}
+.deck-container .slide pre {
+  border-color: #ccc;
+}
+.deck-container .slide code {
+  color: #888;
+}
+.deck-container .slide blockquote {
+  font-size: 2em;
+  font-style: italic;
+  padding: 1em 2em;
+  color: #000;
+  border-left: 5px solid #ccc;
+}
+.deck-container .slide blockquote p {
+  margin: 0;
+}
+.deck-container .slide blockquote cite {
+  font-size: .5em;
+  font-style: normal;
+  font-weight: bold;
+  color: #888;
+}
+.deck-container .slide ::-moz-selection {
+  background: #c00;
+  color: #fff;
+}
+.deck-container .slide ::selection {
+  background: #68838B;
+  color: #fff;
+}
+.deck-container .slide a, .deck-container .slide a:hover, .deck-container .slide a:focus, .deck-container .slide a:active, .deck-container .slide a:visited {
+  color: #68838B;
+  text-decoration: none;
+}
+.deck-container .slide a:hover, .deck-container .slide a:focus {
+  text-decoration: underline;
+}
+.deck-container > .slide .deck-before, .deck-container > .slide .deck-previous {
+  opacity: 0.4;
+}
+.deck-container > .slide .deck-before:not(.deck-child-current) .deck-before, .deck-container > .slide .deck-before:not(.deck-child-current) .deck-previous, .deck-container > .slide .deck-previous:not(.deck-child-current) .deck-before, .deck-container > .slide .deck-previous:not(.deck-child-current) .deck-previous {
+  opacity: 1;
+}
+.deck-container > .slide .deck-child-current {
+  opacity: 1;
+}
+.deck-container .deck-prev-link, .deck-container .deck-next-link {
+  background: #ccc;
+  font-family: serif;
+}
+.deck-container .deck-prev-link, .deck-container .deck-prev-link:hover, .deck-container .deck-prev-link:focus, .deck-container .deck-prev-link:active, .deck-container .deck-prev-link:visited, .deck-container .deck-next-link, .deck-container .deck-next-link:hover, .deck-container .deck-next-link:focus, .deck-container .deck-next-link:active, .deck-container .deck-next-link:visited {
+  color: #fff;
+}
+.deck-container .deck-prev-link:hover, .deck-container .deck-prev-link:focus, .deck-container .deck-next-link:hover, .deck-container .deck-next-link:focus {
+  background: #68838B;
+  text-decoration: none;
+}
+.deck-container .deck-status {
+  font-size: 0.6666em;
+}
+.deck-container.deck-menu .slide {
+  background: #eee;
+}
+.deck-container.deck-menu .deck-current, .no-touch .deck-container.deck-menu .slide:hover {
+  background: #ddf;
+}
+
+.deck-container .slide titleline {
+  text-align:center;position:absolute;padding:0 48px;left:0;right:0;top:35%;font-size:40pt; color:#000000; font-family: 'MyriadProSemibold', arial,sans-serif;display:all;
+}
+.deck-container .slide subtitleline {
+  text-align:left;position:absolute;padding:0 48px;left:0;top:40%;font-size:32pt; color:#222222; font-family: 'MyriadProSemibold', arial,sans-serif;
+}
+/* .deck-container .slide headline { */
+/*   text-align:left;position:absolute;padding:0 48px;left:0;top:0;font-size:35pt; color:#222222; font-family: 'MyriadProSemibold', arial,sans-serif; */
+/* } */
+.deck-container .slide author {
+  text-align:center;position:absolute;padding:0 48px;left:0;right:0;top:65%;font-size:20pt; color:#888888; font-family: 'MyriadProRegular', arial,sans-serif;
+}
+.deck-container .slide affiliation {
+  text-align:center;position:absolute;padding:0 48px;left:0;right:0;top:80%;font-size:15pt; color:#888888; font-family: 'MyriadProRegular', arial,sans-serif;
+}
+.deck-container .slide citation {font-size:15pt; color:#444444; font-family: 'MyriadProLight', arial,sans-serif;}
+.deck-container .slide highlight {font-size:25pt; color:#c00;}
+.deck-container .slide footnote {font-size:10pt; color:#888888; font-family: 'MyriadProLight', arial,sans-serif;}
+.deck-container .slide ol {position:absolute;padding:0 48px;left:5%;right:5%;top:15%;font-size:25pt; color:#000000; display:all;}
+.deck-container .slide ul {position:absolute;padding:0 48px;left:5%;right:5%;top:15%;font-size:25pt; color:#000000; display:all;}
+.deck-container .slide line {font-size: 120%;}
+.deck-container .slide #equation {font-family:'Times New Roman';padding:20px;text-align:center;font-size:24pt;color:#000000;background:#eeeeee;}
+.deck-container .slide boxright {position:absolute;padding:0;left:50%;top:15%;font-size: 120%;}
+.deck-current img.once  {display:inline;}
+.deck-previous img.once  {display:none;}
+.typeset img {padding:0;margin:0;display:inline;max-width:none;}
+
+.deck-container .slide block {float:left;}

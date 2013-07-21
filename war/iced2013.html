@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>maxDesign</title>
+	<link href="css/car.css" rel="stylesheet" type="text/css" />
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<link href="css/spinner.css" rel="stylesheet" type="text/css" />
+	<link href="css/ui-darkness/jquery-ui-1.9.1.custom.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="scripts/jquery-latest.min.js"></script>	
+	<script type="text/javascript" src="scripts/jquery-ui-1.9.1.custom.min.js"></script>
+	<script type="text/javascript" src="scripts/three.js"></script>
+	<script type="text/javascript" src="scripts/Detector.js"></script>
+	<script type="text/javascript" src="scripts/spinner.js"></script>
+	<script type="text/javascript" src="scripts/carModel.js"></script>
+	<script type="text/javascript" src="scripts/model_new.js"></script>
+	<script type="text/javascript" src="scripts/matchbox.js"></script>
+	<script type="text/javascript" src="scripts/bezierpatch.js"></script>
+	<script type="text/javascript" src="scripts/utility1.js"></script>	
+	<script type="text/javascript" src="scripts/utility2.js"></script>
+
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-22933052-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>	
+</head>
+<body>
+	<header id="header">
+		<nav id="sectionMenu">
+			<a href="/hello.html" title="Hello">Hello</a>
+			<a href="/interaction.html" title="Interaction">Interaction</a>
+			<a href="/collection.html" title="Collection">Collection</a>
+			<a href="/aboutmaxdesign.html" title="About">About</a>
+		</nav>
+	</header>
+	
+	<footer id="footer">
+		<p class="about"><a href="http://yirenumich.appspot.com">maxDesign </a> Max Yi Ren</p>
+		<p class="info" title="Navigate using your mouse &amp; Keyboard"></p>
+	</footer>
+	
+	<div id="container">
+		<div id="createframe">
+		</div>
+		<div id="slidecontrolframe">
+			<h3>Expert Mode</h3>
+			<div id="slider"></div>
+			<h3>Express Mode</h3>
+			<div id="expslider"></div>
+		</div>
+	</div>
+	<div id="controlframe" hidden="hidden">
+		<div id="spinner"></div>
+		<div id="labelframe">
+			
+		</div>
+		<div id="cbutton" class="addlabel active"><a>Add new label</a></div>
+		<div id="cbutton" class="submit active"><a>Submit selected designs</a></div>
+		<div id="cbutton" class="confirm active" hidden="hidden"><a>Confirm</a></div>
+		<div id="cbutton" class="cancel active" hidden="hidden"><a>Cancel</a></div>
+		<div id="#003866" class="palette" style="left:68%;"></div>
+		<div id="#CC0000" class="palette" style="left:73%;"></div>
+		<div id="#eeeeee" class="palette" style="left:78%;"></div>
+		<div id="#777777" class="palette" style="left:83%;"></div>
+	</div>
+	
+	<div id="dialog" title="Label your design" hidden="hidden">
+    	New label:<input type="text" name="label">
+    	<div id="cbutton" class="confirmlabel active"><a>Confirm</a></div>
+		<div id="cbutton" class="cancellabel active"><a>Cancel</a></div>
+	</div>
+	
+	
+	
+ 	<script type="text/javascript">
+		C = new create();
+		var i;
+ 		for(i=0;i<p;i++){
+ 			var str = "slider"+i;
+ 			var options = {
+ 					 orientation: "vertical",
+ 					 max: 1,
+ 					 min: 0,
+ 					 step: 0.05,
+ 					 value: C.X[0][i],
+ 	 	 			 slide : function(e, ui) {
+ 	 	 				var id = parseInt(this.id.slice(6,this.id.length));
+ 	 	 			 	C.X[0][id] = ui.value;
+ 	 	 			 	C.update();
+ 	 	 			 },
+ 	 	 			 change : function(e, ui) {
+ 	 	 			 }
+ 			};
+ 			$("#slider").append("<div id="+str+" style='background:#666666;margin-left:4%;margin-right:4%;margin-top:7%;float:left;'></div>");
+ 			$("#"+str).slider(options);
+ 		}
+ 		wspinner = new Spinner($('#spinner')[0], 'white');
+ 		wspinner.show();
+ 		L = new label();
+ 		
+ 		$( "#slidecontrolframe" ).accordion();
+		
+        
+		$("div#cbutton").mouseover(function(){
+			if ($(this).is(".active")){$(this).removeClass("active").addClass("highlight");}});
+		$("div#cbutton").mouseout(function(){
+			if ($(this).is(".highlight")){$(this).addClass("active").removeClass("highlight");}});
+		
+ 		$("div#cbutton.submit").click(function(){
+			if($("div#cbutton.submit").is(".highlight")){
+				$("div#cbutton.submit").hide();
+				$("div#cbutton.confirm").show();
+				$("div#cbutton.cancel").show();
+			}});
+ 		$("div#cbutton.addlabel").click(function(){
+ 			if($("div#cbutton.addlabel").is(".highlight")){
+ 				$( "#dialog" ).dialog();
+ 			}});
+ 		$("div#cbutton.confirmlabel").click(function(){
+			var label = $("input")[0].value;
+			for(var i=0;i<C.label.length;i++){
+				if(C.label[i]==label){
+					return;
+				}
+			}
+			$("#labelframe").append("<div id='label' class='"+C.label.length+"' onclick='removeLabel("+C.label.length+");'><a>"+label+"</a></div>");
+			C.label.push(label);
+			if(C.label.length>3){
+				$("div#cbutton.addlabel").removeClass("active");
+			}
+			$( "#dialog" ).dialog('close');
+		});
+ 		function removeLabel(id){
+ 			C.label.splice(id,1);
+ 			$($("div#label")[id]).remove();
+ 			if(C.label.length<4){$("div#cbutton.addlabel").addClass("active");}
+ 		}
+//  		$("div#labelbutton").click(function(){
+//  			var id = parseInt(this.class);
+//  			C.label.splice(id,1);
+//  			this.remove();
+//  		});
+ 		$("div#cbutton.cancellabel").click(function(){
+			$( "#dialog" ).dialog('close');
+		});
+ 		
+ 		
+ 		
+		$("div#cbutton.confirm").click(function(){
+			wspinner.show();
+			C.store();
+		});
+		$("div#cbutton.cancel").click(function(){
+			$("div#cbutton.confirm").hide();
+			$("div#cbutton.cancel").hide();
+			$("div#cbutton.submit").show();
+		});
+		for (var i=0;i<$(".palette").length;i++){
+			var a = $($(".palette")[i]);
+			a.css({'background-color':a.attr('id')});
+			a.click(function(){
+				var str = this.attributes[0].value;
+				carUnselectedColor = parseInt(str.slice(1,str.length),16);
+				carSelectedColor = carUnselectedColor+1118481;
+				C.color = carUnselectedColor;
+				var lc = create_scene.scene.children.length;
+				create_scene.scene.__objects[2].children[0].material.color.setHex(carUnselectedColor);
+				create_scene.renderer.clear();
+				create_scene.renderer.render(create_scene.scene,create_scene.camera);
+			});
+		}
+
+	</script>
+	
+	<div class="share">
+		<ul>
+			<li class="twitter">
+				<span class="icon"><em>Share this on Twitter</em></span>
+				<span class="text">
+					<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yirenumich.appspot.com/hello.html" data-text="" data-count="horizontal" data-via="renyiumich">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				</span>
+			</li>
+			<li class="google">
+				<span class="icon"><em>Google Plus 1</em></span>
+				<span class="text"><g:plusone size="medium" href="http://yirenumich.appspot.com/hello.html"></g:plusone></span>
+			</li>
+			<li class="facebook">
+				<span class="icon"><em>Like this on Facebook</em></span>
+				<span class="text"><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fyirenumich.appspot.com%2Fhello.html&amp;layout=button_count&amp;show_faces=true&amp;width=110&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe></span>
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+		{lang: 'en-GB'}
+	</script>
+</body>
+</html>

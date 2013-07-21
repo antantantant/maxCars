@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+
+	<title>idetc2012c Presentation</title>
+	<!-- Required stylesheet -->
+	<link rel="stylesheet" href="resource/slides/deck/core/deck.core.css">
+	<!-- Extension CSS files go here. Remove or add as needed. -->
+	<link rel="stylesheet" href="resource/slides/deck/extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/status/deck.status.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/scale/deck.scale.css">
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="resource/slides/deck/themes/transition/fade.css">
+	<!-- Required Modernizr file -->
+	<script src="resource/slides/deck/modernizr.custom.js"></script>
+	
+	
+    <!-- 	Customized stylesheet and .js -->
+	<link rel="stylesheet" href="css/myPresentation.css">
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<link href="css/spinner.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="scripts/jquery-latest.min.js"></script>	
+	<script type="text/javascript" src="scripts/three.js"></script>
+	<script type="text/javascript" src="scripts/Detector.js"></script>
+	<script type="text/javascript" src="scripts/spinner.js"></script>
+	<script type="text/javascript" src="scripts/carModel.js"></script>
+	<script type="text/javascript" src="scripts/model_new.js"></script>
+	<script type="text/javascript" src="scripts/matchbox.js"></script>
+	<script type="text/javascript" src="scripts/bezierpatch.js"></script>
+	<script type="text/javascript" src="scripts/utility1.js"></script>	
+	<script type="text/javascript" src="scripts/utility2.js"></script>
+	
+	<script type="text/javascript" src="scripts/easyload-tags.js"></script>
+	<script type="text/javascript" src="scripts/jsMath/plugins/spriteImageFonts.js"></script>
+	<script type="text/javascript" src="scripts/tex2math.js"></script>
+</head>
+
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+<section class="slide">
+	<titleline>On Design Preference Elicitation<br> with Crowd Implicit Feedback</titleline>
+	<author>Yi Ren (Max) and Panos Papalambros</author>
+	<affiliation>University of Michigan, Ann Arbor.    |    IDETC, Chicago, Aug. 14, 2012</affiliation>
+</section>
+
+<section class="slide">
+	<h3>Motivation</h3>
+	<section class="slide"><line>Understanding user preferences is a key to conceptual design, and has become practical through statistical learning.</line>
+	</section>
+	<section class="slide"><line>Learning of the market has shifted from traditional questionnaires to more interactive, social-networked data.</line><br>
+	</section>
+	<section class="slide"><line>How shall we create human-computer interactions to get data useful for design decision making?</line></section><br>
+	
+	<section class="slide"><highlight>The objective of this paper is to develop interactions that help to <em>elicit preferred designs from the crowd</em>.</highlight></section>
+</section>
+
+<!-- <section class="slide"> -->
+<!-- 	<h3>Covered Topics</h3><br> -->
+<!-- 	<section class="slide"><line>Learning individual preference models from implicit feedback (comparison\choice data)</line></section><br> -->
+<!-- 	<section class="slide"><line>Proposing designs based on the learned model</line></section><br> -->
+<!-- 	<section class="slide"><line>Improve design proposal based on crowd interactions</line></section> -->
+<!-- </section> -->
+
+<section class="slide">
+	<h3>carMesh: An interaction to elicit preferred cars</h3>
+	<line style="font-size:90%;">Please choose designs you prefer more and let the algorithm propose new designs.</line>
+	<div id="demo">
+		<div id="interactionframe">
+			<div id="selectbutton" class="topleft">
+				<div id="modelframe1"></div></div>
+			<div id="selectbutton" class="topright">
+				<div id="modelframe2"></div></div>
+			<div id="selectbutton" class="bottomleft">
+				<div id="modelframe3"></div></div>
+			<div id="selectbutton" class="bottomright">
+				<div id="modelframe4"></div></div>
+		</div>
+		<div id="controlframe">
+			<div id="spinner"></div>
+			<div id="status"><a>Some rendering going on...Please wait</a></div>
+			<div id="cbutton" class="train"><a>Generate better designs</a></div>
+			<div id="cbutton" class="submit"><a>Submit selected designs</a></div>
+			<div id="cbutton" class="restart active"><a>Restart interaction</a></div>
+			<div id="palette"></div>
+		</div>
+	</div>
+</section>
+
+<section class="slide">
+	<h3>Related work to design preference elicitation</h3>
+	<section class="slide"><line>Conjoint analysis (CA): Learns preference model based on choice data; chooses queries adaptively to learn more efficiently.</line>
+	<br><citation>Toubia, O.and Hauser, J.(2004), Toubia, O. et al.(2007), Netzer, O. et al.(2008) and others</citation>
+	</section>
+	<section class="slide"><line>Recommender systems (RS): Propose products based on the learned user profiles; Proposals can be improved by using crowd profiles (collaborative filtering).</line>
+	<br><citation>Balabanovic, M. and Shoham, Y.(1997), Linden, G. et al.(2003), Adomavicius, G. and Tuzhilin, A. (2005), Das, A.S. et al.(2007) and others</citation>
+	</section>
+	<section class="slide"><highlight>CA focuses on modeling rather than finding the optimally preferred designs of users;</highlight><br>
+	<highlight>RS passively recommends existing products. It does not create designs to satisfy user desires.</highlight></section><br>
+	<section class="slide"><line>Global Optimization: Optimizes a black-box function through statistical learning.</line>
+	<br><citation>Jones, D.R. et al.(1998), Sasena, M.J. (2002) and others</citation></section><br>
+<!-- 	<section class="slide"><footnote>Toubia, O., Hauser, J.R. and Simester, D.I., Polyhedral methods for adaptive choice-based conjoint analysis, Journal of Marketing Research,41(1),pp:116--131, -->
+<!-- 2004; -->
+<!-- Toubia, O., Evgeniou, T. and Hauser, J., Optimization-based and machine-learning methods for conjoint analysis: Estimation and question design, Conjoint Measurement: Methods and Applications, pp:231, 2007; -->
+<!-- Netzer, O., Toubia, O., Bradlow, E.T., Dahan, E., Evgeniou, T., Feinberg, F.M., Feit, E.M., Hui, S.K., Johnson, J. and Liechty, J.C., Beyond conjoint analysis: Advances in preference measurement, Marketing Letters, 19(3), pp:337--354, 2008; -->
+<!-- Balabanovic, M. and Shoham, Y., Fab: content-based, collaborative recommendation, Communications of the ACM, 40(3), pp:66--72, 1997; -->
+<!-- Linden, G., Smith, B. and York, J., Amazon.com recommendations: Item-to-item collaborative filtering, Internet Computing, 7(1), pp:76--80, 2003; -->
+<!-- Adomavicius, G. and Tuzhilin, A., Toward the next generation of recommender systems: A survey of the state-of-the-art and possible extensions, IEEE Transactions on Knowledge and Data Engineering, 17(6), pp:734--749, 2005; -->
+<!-- Das, A.S., Datar, M., Garg, A. and Rajaram, S., Google news personalization: Scalable online collaborative filtering, Proceedings of the 16th International Conference on World Wide Web, pp:271--280, 2007; -->
+<!-- Jones, D.R. and Schonlau, M. and Welch, W.J., Efficient global optimization of expensive black-box functions, Journal of Global Optimization, 13(4), pp:455--492, 1998; -->
+<!-- Sasena, M.J. Flexibility and Efficiency Enhancements for Constrained Global Design Optimization with Kriging Approximations, University of Michigan, Ann Arbor, Michigan, 2002; -->
+<!-- <br></footnote></section> -->
+	
+</section>
+
+<section class="slide">
+	<h3>Things to cover in this talk</h3><br>
+	<section class="slide"><line>Individual preference elicitation: Real-time learning from implicit feedback and design proposal mechanism</line></section><br>
+	<section class="slide"><line>Improving elicitation through crowd interaction data</line></section>
+	
+</section>
+
+<section class="slide">
+	<subtitleline>Elicitation using implicit feedback</subtitleline>
+	<line style="position:absolute;top:55%;">* Preference modeling using rankSVM</line><br>
+	<line style="position:absolute;top:65%;">* Design proposal based on the modeled preference</line>
+</section>
+
+<section class="slide">
+	<h3>Implicit feedback, or choice data, comparison data</h3><br>
+	<section class="slide"><line>A set of designs: $\{x_1, x_2, ..., x_n\}$</line></section><br>
+	<section class="slide"><line>A comparison set: $\mathcal{I}$, for each pair $\{i_1, i_2\} \in \mathcal{I}$, we have design $i_1$ more preferred than design $i_2$.</line></section><br>
+	<section class="slide"><line>Denote $\Phi(x)$ as unknown features of a design.</line></section><br>
+	<section class="slide"><line>The preference is modeled as $f(x) = w^T\Phi(x)$.</line>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<highlight>We call $w$ the user profile.</highlight></section><br>
+</section>
+
+<section class="slide">
+	<h3>Preference modeling using rankSVM</h3>
+	<section class="slide"><line style="font-size:100%;">Learn $w$ by balancing training error $\xi$ and model complexity $|w|$:</line><br>
+	<div id = "equation">
+	$\begin{eqnarray}
+	& \underset{w,~\xi_{i_1i_2} ~\forall \{i_1,i_2\}\in \mathcal{I}}{\text{minimize}} & \quad \frac{1}{2}w^Tw + C \sum \xi_{i_1i_2}\\
+	& \text{subject to} & \quad w^T\left(\Phi(x_{i_1}) - \Phi(x_{i_2})\right)\geq 1 - \xi_{i_1i_2}, \quad \xi_{i_1i_2} \geq 0.
+	\end{eqnarray}$
+	</div></section>
+	<section class="slide"><line style="font-size:100%;">Let each row of $Z$ be a feature difference $\Phi(x_{i_1}) - \Phi(x_{i_2})$, the problem can be equivalently solved by its dual problem:</line><br>
+	<div id = "equation">
+	$\begin{equation}
+	\underset{{\bf 0} \preceq \alpha \preceq C{\bf 1}}{\text{minimize}} 
+	\quad \frac{1}{2}\alpha^T ZZ^T \alpha - {\bf 1}^T\alpha
+	\end{equation}$
+	</div></section>
+	<section class="slide"><line style="font-size:100%;">A working-set selection algorithm (<citation style="font-size:100%;">Fan et al. 2005</citation>) can be used to efficiently solve this QP; </line>
+	<line style="font-size:100%;">Kernel $K$ can replace $ZZ^T$ to implicitly define the feature mapping $\Phi$.</line></section>
+	<section class="slide"><highlight>Solving this problem to get a preference model complying with the implicit feedback.</highlight></section>
+</section>
+
+<section class="slide">
+	<h3>Design proposal based on the modeled preference</h3>
+	<section class="slide"><line>Balance of exploration and exploitation: Propose a design away from previous ones with high predicted preference value.</line></section>
+	<section class="slide"><line>This is achieved by maximizing the merit function:</line>
+	<div id = "equation">$f_{merit}(x) = \sum \alpha \left(\Phi(x_{i_1})-\Phi(x_{i_2})\right)^T\Phi(x) + b \min_i ||\Phi(x_i) - \Phi(x)||$,</div>
+	<line>where $b$ adjusts the importance of exploration.</line></section>
+	<section class="slide"><line>A genetic algorithm is used to optimize the merit. A tradeoff exists between a better solution and a faster response to the user.</line></section>
+</section>
+
+<section class="slide">
+	<subtitleline>Learning from the crowd</subtitleline>
+	<line style="position:absolute;top:55%;">* A graph representation of crowd interaction data</line><br>
+	<line style="position:absolute;top:65%;">* Better design proposal using the crowd graph</line>
+	<line style="position:absolute;top:75%;">* Simulation results</line>	
+</section>
+
+<section class="slide">
+	<h3>Crowd data</h3>
+	<section class="slide"><line>An individual interaction can be represented as a path.</line>
+	<img style="width:60%;height:60%;margin:0 25%;padding:0;display:inline;max-width:none;" src="images/idetc2012c/path.png"></section>
+	<section class="slide"><line>A collection of individual interactions can be represented as a graph.<br>$\bar{p}_i$ is the average number of iterations to get to $i$th leaf vertex.</line><br>
+	<img style="width:60%;height:60%;margin:0 25%;padding:0;display:inline;max-width:none;" src="images/idetc2012c/tree.png"></section>
+</section>
+
+<section class="slide">
+	<h3>Use collaborative filtering to find similar users from the crowd</h3>
+	<section class="slide"><line>At some iteration $s$ in a new interaction, we estimate the user profile $w_s$ and find similar previous user profiles using</line>
+	<div id = "equation">
+	$f_{similarity}(w_s,w_{s\tau}) = w_s^Tw_{s\tau}/||w_s||||w_{s\tau}||$
+	</div></section>
+	<section class="slide"><line>Denote as $\mathcal{X}_s$ the set of most-preferred designs from previous users with the highest similarity to $w_s$.</line>
+	<line>A heuristic proposal is to "jump" to one design in $\mathcal{X}_s$. But which one?</line>
+	<img style="width:60%;height:60%;margin:0 25%;padding:0;display:inline;max-width:none;" src="images/idetc2012c/jump.png">
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Heuristic proposal algorithms</h3>
+	<section class="slide"><line style="font-size:100%;">JUMP1: Pick the most costly design, i.e., the one with maximum average cost.</line></section>
+	<section class="slide"><line style="font-size:100%;">JUMP2: Pick a design with minimum <em>extra</em> cost when the "jump" fails.</line></section>
+	<section class="slide"><line style="font-size:100%;">Let $\mathcal{X}_i$ be a set of leaf vertices that are descendants of the $i$th element of $\mathcal{X}_s$. Let $\tilde{p}_i$ be the average cost when we choose to query $x_i \in \mathcal{X}_s$ but it is not the optimally-preferred design for the user:</line>
+	<div id = "equation">
+	$\begin{equation}
+	\tilde{p}_i = \frac{1}{|\mathcal{X}_i|}\sum_{j=1}^{|\mathcal{X}_i|} \bar{p}_{i_j}, 
+	\end{equation}$
+	</div>
+	<img style="width:45%;height:45%;margin:0 25%;padding:0;display:inline;max-width:none;" src="images/idetc2012c/h2.png">
+	<highlight></highlight>
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Simulation tests set-up</h3>
+	<line style="font-size:100%;">We use simulations to show that both JUMP1 and JUMP2 improve the optimization efficiency.</line><br>
+	<line style="font-size:100%;">1000 optimizations are solved in a sequence. Each has an optimal solution uniformly realized from the grey grids. All grids are candidate designs to be proposed.</line><br>
+	<img style="width:50%;height:50%;margin:0 25%;padding:0;display:inline;max-width:none;" src="images/idetc2012c/2ddemoloc.png">
+	<section class="slide"><line style="font-size:100%;">Objective functions are modeled to be Gaussian.</line></section>
+	<section class="slide"><line style="font-size:100%;">The same initial guess (top-right and bottom-left pair) is used for all optimizations. Each new proposal contains one solution; each feeback contains one pairwise comparison.</line></section>
+	<section class="slide"><line style="font-size:100%;">The crowd graph and leaf costs are updated after each optimization is done.</line></section>
+</section>
+
+<section class="slide">
+	<h3>Simulation results</h3>
+	<section class="slide"><img style="width:50%;height:50%;margin:0;padding:0;display:inline;max-width:none;" src="images/idetc2012c/result1.png">
+	<boxright style="font-size:100%;"><br><br><br>Crowd knowledge can improve the optimization; JUMP2 has better performance than JUMP1.</boxright></section>
+	<section class="slide"><img style="width:40%;height:40%;margin:0;padding:0;display:inline;max-width:none;" src="images/idetc2012c/result2.png">
+	<img style="width:43%;height:43%;margin-left:10%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012c/result3.png"><br>
+	<line style="font-size:100%;">JUMP2 converges to an almost fixed strategy while JUMP1 does not.</line></section>
+</section>
+
+<section class="slide">
+	<h3>Initial guess updates</h3><br>
+	<section class="slide"><line>Update the initial guess to the optimal solutions obtained most frequently.</line></section><br>
+	<section class="slide"><line>Fixed JUMP3: Update after every 200 optimization tasks.</line>
+	<line>Drawback: Once updated, previous search data will be obsolete.</line></section><br>
+	<section class="slide"><line>Adaptive JUMP3: Check if the current initial guess can represent the observed clusters of optimal solutions. If not, replace with the current cluster centers.</line><br><br>
+	<img style="width:70%;height:70%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012c/iniguess.png">
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Simulation results</h3>
+	<section class="slide"><img style="width:60%;height:60%;margin-left:15%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012c/result4.png"><br>
+	<line>Adaptively update initial guess can further improve the optimization performance based on JUMP2.</line>
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Conclusions</h3>
+	<section class="slide"><line>The question "What designs do you prefer?" can be answered by the crowd through interactions with learning capability.</line></section><br>
+	<section class="slide"><line>This paper demonstrated one potential interaction scheme and explained the underlying elicitation algorithms.</line></section><br>
+	<section class="slide"><line>Simulation studies showed that crowd interactions can improve the efficiency of future elicitations.</line></section><br>
+</section>
+
+<section class="slide">
+	<h3>Future work</h3>
+	<section class="slide"><line>Real-user tests will be conducted to evaluate the proposed heuristics.</line></section><br>
+	<section class="slide"><line>Structured design representations will be used to enrich design variation. 
+	Learning methods on structued data (as oppose to vectorial one) will be investigated.</line></section><br>
+	<section class="slide"><line>Evolutionary algoirthms on structures will be used for design proposal.</line><citation> Figure from Karl Sims' work on evolutionary creature. Sims (1994)</citation><br>
+	<img style="width:40%;height:40%;margin-left:25%;;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012c/graph1.png">
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Acknowledgement</h3><br><br>
+	<section class="slide"><line>The authors would like to thank <em>Professor Richard Gonzalez, Professor Clayton Scott and Professor Honglak Lee</em> for their valuable input to this work.</line><br><br>
+	<line>carMesh is created based on the feedback from: <em>Alex Burnap, Steven Hoffenson, Kwangjae Lee, Soodeh Montazeri and many others</em>.</line>
+	</section>
+</section>
+
+<section class="slide">
+	<line style="position:absolute;left:0;right:0;text-align:center;font-size:80%;top:90%;">presentation available at http://yirenumich.appspot.com/idetc2012c.html</line>
+	<titleline>Thank you all for attending.<br>What questions do you have?</titleline>
+	<table style="position:absolute;left:20%;right:10%;width:70%;top:60%;">
+	<tr>
+	<td style="width:15%;">
+	<img style="width:100px;height:150px;margin:0;padding:0;display:inline;" src="images/idetc2012c/yiren2012jul.png"></td>
+	<td>
+	<p style="font-size:80%;margin-left:0%;">Research Fellow<br>Optimal Design Lab<br>University of Michigan<br>yiren@umich.edu<br>yirenumich.appspot.com</p></td>
+	<td style="left: 50%;width:15%;">
+	<img style="width:100px;height:150px;margin-left:0;margin-bottom:0;padding:0;display:inline;" src="images/idetc2012c/panos.png"></td>
+	<td>
+	<p style="font-size:80%;margin-left:0%;">Professor<br>Optimal Design Lab<br>University of Michigan<br>pyp@umich.edu<br>ode.engin.umich.edu</td>
+	</tr>
+	</table>
+</section>
+
+<section class="slide">
+	<h3>Kernel implementation in carMesh</h3>
+	<section class="slide"><line style="font-size:100%;">$x$ are distances between control points.</line><br>
+	<img style="width:30%;height:30%;margin:0;padding:0 70px;display:inline;max-width:none;" src="images/idetc2012c/cp1.png">
+    <img style="width:25%;height:25%;margin:0;padding:0;display:inline;max-width:none;" src="images/idetc2012c/cp2.png">
+	</section>
+	<section class="slide"><line style="font-size:100%;">An RBF kernel is used to measure the similarity between two design differences:</line>
+	<div id = "equation">$\begin{eqnarray}
+	K_{ij} && = \left\langle \Phi(x_{i_{1}})-\Phi(x_{i_{2}}),\Phi(x_{j_{1}})-\Phi(x_{j_{2}})\right\rangle\\
+	&& =k(x_{i_{1}},x_{j_{1}})+k(x_{i_{2}},x_{j_{2}})-k(x_{i_{1}},x_{j_{2}})-k(x_{i_{2}},x_{j_{1}}),
+	\end{eqnarray}$</div>
+	<line style="font-size:100%;">where $k(x_i,x_j) = \exp(-||x_i-x_j||^2/p)$ and $p$ is the dimensionality of $x$.</line>
+	</section>
+</section>
+
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="resource/slides/deck/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="resource/slides/deck/core/deck.core.js"></script>
+<script src="resource/slides/deck/extensions/hash/deck.hash.js"></script>
+<script src="resource/slides/deck/extensions/menu/deck.menu.js"></script>
+<script src="resource/slides/deck/extensions/goto/deck.goto.js"></script>
+<script src="resource/slides/deck/extensions/status/deck.status.js"></script>
+<script src="resource/slides/deck/extensions/navigation/deck.navigation.js"></script>
+<script src="resource/slides/deck/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	jsMath.ConvertTeX();
+	jsMath.Process();
+	wspinner = new Spinner($('#spinner')[0], 'black');
+	if (!Detector.webgl) Detector.addGetWebGLMessage();
+	$(window).load( function() {S = new search('ego')});
+
+	$("div#selectbutton").dblclick(function(){
+		if (!$(this).is(".selected")){
+			$(this).removeClass("active").addClass("selected");
+			var classname = $(this).attr("class");
+			switch (classname){
+				case "topleft selected":
+					S.currentY[0]=1;
+					break;
+				case "topright selected":
+					S.currentY[1]=1;
+					break;
+				case "bottomleft selected":
+					S.currentY[2]=1;
+					break;
+				case "bottomright selected":
+					S.currentY[3]=1;
+					break;	
+			}
+		}
+		else{
+			$(this).removeClass("selected").addClass("active");
+			var classname = $(this).attr("class");
+			switch (classname){
+				case "topleft active":
+					S.currentY[0]=0;
+					break;
+				case "topright active":
+					S.currentY[1]=0;
+					break;
+				case "bottomleft active":
+					S.currentY[2]=0;
+					break;
+				case "bottomright active":
+					S.currentY[3]=0;
+					break;	
+			}
+		}
+		if (eval(S.currentY.join('+'))>0){
+			if (!$("div#cbutton.train").is(".active")&&eval(S.currentY.join('+'))<4){$("div#cbutton.train").addClass("active");}
+			if (!$("div#cbutton.submit").is(".active")){$("div#cbutton.submit").addClass("active");}
+		}
+		else{
+			if ($("div#cbutton.train").is(".active")){$("div#cbutton.train").removeClass("active");}
+			if ($("div#cbutton.submit").is(".active")){$("div#cbutton.submit").removeClass("active");}
+		}
+	});
+	$("div#selectbutton").mouseover(function(){
+		if (!$(this).is(".selected")){$(this).addClass("active");}});
+	$("div#selectbutton").mouseout(function(){
+		$(this).removeClass("active");});
+	$("div#cbutton").mouseover(function(){
+		if ($(this).is(".active")){$(this).removeClass("active").addClass("highlight");}});
+	$("div#cbutton").mouseout(function(){
+		if ($(this).is(".highlight")){$(this).addClass("active").removeClass("highlight");}});
+	
+	$("div#cbutton.train").click(function(){
+		wspinner.show();
+		S.newpt();
+		S.currentY = [0,0,0,0];
+		$("div#selectbutton").removeClass("selected");
+		$("div#cbutton.train").removeClass("active").removeClass("highlight");
+		$("div#cbutton.submit").removeClass("active").removeClass("highlight");
+	});
+	$("div#cbutton.restart").click(function(){
+		location.reload();
+	});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	<title>idetc2013a Presentation</title>
+	<!-- Required stylesheet -->
+	<link rel="stylesheet" href="resource/slides/deck/core/deck.core.css">
+	<!-- Extension CSS files go here. Remove or add as needed. -->
+	<link rel="stylesheet" href="resource/slides/deck/extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/status/deck.status.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/scale/deck.scale.css">
+	
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<link rel="stylesheet" href="css/presentation.css">
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="resource/slides/deck/themes/transition/fade.css">
+	
+	<!-- Required Modernizr file -->
+	<script src="resource/slides/deck/modernizr.custom.js"></script>
+    
+    <!-- 	Customized stylesheet and .js -->
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+		extensions: ["tex2jax.js"],
+		jax: ["input/TeX", "output/HTML-CSS"],
+		tex2jax: {
+		  inlineMath: [ ['$','$'] ],
+		  displayMath: [ ["\\[","\\]"] ],
+		  processEscapes: true
+		},
+		"HTML-CSS": { availableFonts: ["TeX"] }
+	  });
+	</script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/1.1-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML.js"></script>
+	<script>window.MathJax || document.write('<script src="scripts/mathjax/MathJax.js"><\/script>')</script>
+	<style type="text/css">
+		.slide.deck-previous.hideafter, .slide.deck-before.hideafter {
+			display: none;
+		}
+	</style>
+</head>
+
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide" id="title-slide">
+	<titleline>A scalable preference elicitation algorithm using group generalized binary search</titleline>
+	<author>Max Yi Ren, Clayton Scott and Panos Papalambros</author>
+	<affiliation>University of Michigan, Ann Arbor.    |    IDETC, Portland, Aug. 06, 2013</affiliation>
+</section>
+
+<section class="slide" id="overview">
+	<h3>Overview</h3>
+	<section class="slide"><line>In online shopping, one may encounter overwhelming alternatives to choose from.</line></section><br>
+	<section class="slide"><line>Recommender systems: To explore similar products or products from people with similar taste.</line>
+	</section><br>
+	<section class="slide"><line>Motivation of this paper: Develop an interaction that helps users
+	 to find their most preferred product in least effort. </line>
+	</section><br>
+	<section class="slide"><line>Potential contribution: Candidate product designs can be evaluated efficiently through 
+	crowdsourcing and user clusters can be identified.</line>
+	</section><br>
+</section>
+
+<section class="slide" id="problem">
+	<h3>Problem statement</h3>
+	<section class="slide"><line>Objective: An efficient query algorithm to find the most preferred product of a user from a product set.</line></section><br>
+	<section class="slide"><line>A product set contains a finite number of products, represented by a known set of features.</line>
+	<line>E.g., a car can be represented by (1) MPG, (2) safety, (3) price, (4) style and so on.</line></section><br>
+	<section class="slide"><line>A query is a pairwise comparison question to the user: “Do you prefer design A or design B?” 
+	The response to a query is binary: A or B.</line></section><br>
+	<section class="slide"><line>An interaction consists of a sequence of queries. 
+	It terminates when $\text{Pr}(\text{product } i \text{ is the most preferred} | \text{all previous responses}) = 1$.
+	</line></section>
+</section>
+
+<section class="slide" id="assumption">
+	<h3>Problem statement (cont.)</h3>
+	
+	<section class="slide"><line>Key assumptions: <br> (1) The user has consistent preference throughout the interaction, i.e., fixed partworth.</line></section><br>
+	<section class="slide"><line>(2) No error responses.</line></section><br>
+	<section class="slide"><line>(3) Product features are known and a linear utility is capable to model user preference.</line></section><br>
+	
+	<br>
+	<section class="slide"><line>Key question: What is the best way to query so that an interaction will have the least expected number of queries?</line></section>
+</section>
+
+<section class="slide" id="demo1">
+	<h3>Demonstration of the problem</h3>
+	<block style="width:50%;">
+		<img style="width:100%;height:40%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/demoprob1.png">
+	</block>
+	<block style="width:40%;padding-top:20%;">
+		<line>Four candidate product A, B, C and D: <br> If the user prefers A over B already, which two products will you query next?</line>
+	</block>
+</section>
+
+<section class="slide" id="demo2">
+	<h3>Demonstration of the problem (cont.)</h3>
+	<block style="width:50%;">
+		<img style="width:100%;height:40%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/demoprob2.png">
+	</block>
+	<block style="width:50%;padding-top:20%;">
+		<line>When the user prefers A $\succ$ B and A $\succ$ C, we can conclude that A $\succ$ D if the linear utility model holds.</line>
+	</block>
+</section>
+
+<section class="slide" id="20q1">
+	<h3>Object identification (The "Twenty Questions" game)</h3>
+	<section class="slide">
+	<line>20Q is a game between two people: Player A first thinks about a famous person in mind. 
+	Player B needs to figure out that person by asking yes/no questions, e.g., “Is the person a female?”. 
+	Player B wins if she figures out within 20 questions.</line>
+	</section><br>
+	<section class="slide">
+	<line>The query strategy of 20Q is called Generalized Binary Search (GBS).</line>
+	</section><br>
+	<section class="slide">
+	<line>Main idea of GBS: Query the most uncertain feature, i.e., pick feature 
+	$i$ such that $\text{Pr}(\text{has feature } i? | \text{all previous responses})$ closes to 0.5</line>
+	</section>
+</section>
+
+<section class="slide" id="20q2">
+	<h3>Object identification (The "Twenty Questions" game)</h3>
+	<line>Main idea of GBS: Query the most uncertain feature, i.e., pick feature 
+	$i$ such that $\text{Pr}(\text{has feature } i? | \text{all previous responses})$ close to 0.5</line>
+	<img style="width:100%;height:40%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+	src="images/idetc2013a/table1.png">
+	<line>In this example, both query 1 and query 2 can be chosen.</line>
+</section>
+
+<section class="slide" id="group1">
+	<h3>Group identification</h3>
+	<section class="slide">
+	<line>Group identification problem: In 20Q, 
+	what should be the query strategy if player B wins by knowing 
+	which <em>group</em> the person belongs to?</line>
+		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+	src="images/idetc2013a/table2.png">
+	</section><br>
+
+	<section class="slide">
+	<line>The expected number of queries needed to identify a group 
+	has an analytical form and can be treated as a function of query strategy, 
+	i.e., a tree structure that tells which query to make under what previous 
+	responses. (**Scott)</line>
+	</section>
+</section>
+
+<section class="slide" id="group2">
+	<h3>Group identification (cont.)</h3>
+	<block style="width:50%;">
+		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/tree.png">
+	</block>
+	<block style="width:50%;padding-top:10%;">
+		<line>The expected number of queries for group identification is an function of:</line><br><br>
+		<line>(1) The query strategy, i.e., a tree structure that tells which query to make under 
+		what previous responses</line><br><br>
+		<line>(2) The prior distribution of the groups</line>
+	</block>
+</section>
+
+<section class="slide" id="ggbs1">
+	<h3>Group generalized binary search</h3>
+	<section class="slide">
+	<line>Main idea of GGBS: To minimize the expected number of queries, we need to query the feature that (1) is the most uncertain and 
+	(2) the response to which will not separate objects from the same group.</line>
+		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/table2.png">
+	</section><br>
+	<section class="slide">
+	<line>In this case, feature 1 should be queried.</line>
+	</section><br>
+</section>
+
+<section class="slide" id="ggbs2">
+	<h3>Group generalized binary search (cont.)</h3>
+	<section class="slide">
+	<line>Main idea of GGBS: To minimize the expected number of queries, we need to query the feature that (1) is the most uncertain and 
+	(2) the response to which will not separate objects from the same group.</line><br><br>
+		<line>This query strategy requires calculation of 
+			<div id="equation">
+			\[
+				\text{Pr}(\text{The answer to query } j \text{ is 'yes'}| \text{all previous responses}),
+			\]</div>
+			and
+			<div id="equation">
+			\[
+				\text{Pr}(\text{Group } i \text{ is the correct group}| \text{all previous responses and the answer to query } j \text{ is 'yes'}).
+			\]</div>
+			Both are based on the calculation of
+			<div id="equation">
+			\[
+				\text{Pr}(\text{Group } i  \text{ is the correct group} | \text{all previous responses})
+			\]</div>
+		</line>
+	</section><br>
+</section>
+
+<section class="slide" id="identical">
+	<h3>Our problem is identical to group identification</h3>
+	<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+	src="images/idetc2013a/table3.png">
+	<section class="slide">
+	<line>The key step in the solution is the calculation of </line> 
+	<div id="equation">
+	\[\pi_{\Theta^i}:= \text{Pr}(\text{Product } i \text{ is the most preferred} | \text{all previous responses}).\]
+	</div>
+	</section><br>
+</section>
+
+<section class="slide" id="difficulty1">
+	<h3>Implementation difficulty</h3>
+	<block style="width:50%;">
+		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/fig1.png">
+	</block>
+	<block style="width:50%;">
+	<line>Calculating $\pi_{\Theta^i}$ is time consuming.</line><br><br>
+	<line>On the figure, the <b>green</b>, <b>blue</b> and <b>red</b> shaded areas represent 
+	$\pi_{\Theta^A}$, $\pi_{\Theta^B}$ and $\pi_{\Theta^C}$ respectively.</line><br><br>
+	<line>The depth of each shaded area depends on the distribution of the partworth vector ${\bf w}$</line><br>
+	<line>Without any knowledge, we can initialize its distribution so that $\pi_{\Theta^A}=\pi_{\Theta^B}=\pi_{\Theta^C}$.
+	</block>
+</section>
+
+<section class="slide">
+	<h3>Implementation difficulty</h3>
+	<block style="width:50%;">
+		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/fig2.png">
+	</block>
+	<block style="width:50%;">
+		<line>For the given distribution of ${\bf w}$ (uniform across each group), $\pi_{\Theta^i}$ requires 
+		calculation of arc lengths, or surface areas of a hypersphere in general.</line><br><br>
+		<line>At each iteration, the surface area calculation routine will be 
+		called <br>($\text{num. product} \times \text{num. candidate query}$) times.</line>
+	</block>
+</section>
+
+<section class="slide" id="approximation1">
+	<h3>A fast approximation</h3>
+	<block style="width:50%;">
+		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+	src="images/idetc2013a/fig3.png">
+	</block>
+	<block style="width:50%;">
+		<line>Approximating $\pi_{\Theta^A}$:</line><br><br>
+		<line>(1) Fit a circle such that its center lies on the green arc and it tangents with one of the boundaries</line><br><br>
+		<line>(2) Calculate the radius of the circle $R_A$. The approximated area is then $R_A^{(D-1)}$</line><br><br>
+		<line>(3) Let the depth of the green arc (density of ${\bf w}$ for product A) be $p_A$, we have 
+		<div id="equation">
+		\[
+			\pi_{\Theta^A} = p_AR_A^{(D-1)}.\]
+		</div></line>
+	</block>
+</section>
+
+<section class="slide" id="approximation2">
+	<h3>A fast approximation (cont.)</h3>
+	<block style="width:50%;">
+		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/fig3.png">
+	</block>
+	<block style="width:50%">
+		<line>Finding such a circle involves a convex optimization problem identical 
+		to a hard-margin SVM, thus liblinear can be used to achieve $O(\text{current query size})$ complexity.</line><br><br>
+				<img style="width:80%;height:50%;display:inline;max-width:none;"
+		src="images/idetc2013a/app.png">
+	</block>
+</section>
+
+<section class="slide" id="appggbs">
+	<h3>Simulation study</h3>
+	<line>Algorithm implementation: appGGBS</line><br><br>
+	<line> &loz; Find the four products with the highest conditional probabilities to be the most preferred (6 candidate queries in total)</line><br><br>
+	<line> &loz; Pick a pair from the four designs using GGBS</line><br><br>
+	<line> &loz; After getting user response, update $\pi_{\Theta^i}$ for all candidate products</line><br><br>
+	<line> &loz; Terminate when one product has probability 1 to be the most preferred</line><br><br>
+</section>
+
+<section class="slide" id="ego">
+	<h3>Simulation study (cont.)</h3>
+	<line>Algorithm to compare with: EGO</line><br><br>
+	<line> &loz; The first query contains the two products with highest prior probabilities to be the most preferred</line><br><br>
+	<line> &loz; After getting user response, update the partworth vector ${\bf w}$ and $\pi_{\Theta^i}$</line><br><br>
+	<line> &loz; Each following query contains (i) the previously preferred product and (ii) the product 
+	with highest predicted utility that hasn’t been queried yet</line><br><br>
+	<line> &loz; Terminate when one product has probability 1 to be the most preferred</line><br><br>
+</section>
+
+<section class="slide" id="simresult">
+	<h3>Simulation results: Performance</h3>
+	<block style="width:50%;">
+		<img style="width:90%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/simperf.png">
+	</block>
+	<block style="width:50%;padding-top:10%;">
+		<line>appGGBS has overall better performance. Its superiority increases with $\text{num. product}$ and decreases with $\text{num. feature}$.</line><br><br>
+		<line>EGO can outperform appGGBS under high $\text{num. feature}$ and low $\text{num. product}$.</line><br><br>
+	</block>
+</section>
+
+<section class="slide" id="simcomp">
+	<h3>Simulation results: Computation</h3>
+	<block style="width:50%;">
+		<img style="width:100%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/simcomp.png">
+	</block>
+	<block style="width:40%;padding-left:5%;padding-top:10%;">
+		<line>With 15 product features and 160 candidate products, the average response time is less than 1 second.</line><br><br>
+		<line>An application has been launched at: ***, with both appGGBS and EGO algorithms.</line><br><br>
+	</block>
+</section>
+
+<section class="slide" id="user">
+	<h3>User test</h3>
+	<section class="slide">
+		<block style="width:50%;">
+			<line>A set of laptops with:</line><br><br>
+			<line>&loz; Screen size: 11 or 13 inches</line><br><br>
+			<line>&loz; Storage: 64, 128 or 256 Gb</line><br><br>
+			<line>&loz; CPU: Average or fast</line><br><br>
+			<line>&loz; Keyboard: With or without</line><br><br>
+			<line>&loz; Battery life: Half-day or full-day</line><br><br>
+			<line>&loz; Price: based on features and market prices</line><br><br>
+		</block>
+	</section>
+	
+	<section class="slide">
+		<block style="width:50%;">
+			<line>Test procedure:</line><br><br>
+			<line>&loz; The user is shown the entire product set and asked 
+			to choose the most preferred one. The user can use filters and sorting tools.</line><br><br>
+			<line>&loz; The user then goes through two interactive sessions using appGGBS and EGO.</line><br><br>
+		</block>
+	</section>
+</section>
+
+<section class="slide" id="userresult">
+	<h3>User test results</h3>
+	<block style="width:50%;">
+		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/result.png">
+	</block>
+	<block style="width:50%;padding-top:5%;">
+		<line>All user choices from the product list are 
+		consistent with the outcome from the interactive sessions.</line><br><br>
+		<line>appGGBS outperforms EGO on average.</line><br><br>
+		<line>Note: For the linear utility model to work, the features 
+		need to be hand tuned to ensure that appGGBS (EGO) will not 
+		mistakenly eliminate the correct product based on user responses</line>
+	</block>
+</section>
+
+<section class="slide" id="conclusion">
+	<h3>Conclusions</h3>
+	<section class="slide">
+		<line>An active query algorithm can potentially enhance 
+		online shopping experience by quickly learning the preferred product 
+		of a user from a large amount of products.</line>
+	</section><br>
+	<section class="slide">
+		<line>We proposed an computationally efficient algorithm with strong theoretical 
+		support, and validated its performance using real people.</line>
+	</section><br>
+	<section class="slide">
+		<line>The algorithm is shown to be superior than a previously 
+		proposed heuristic algorithm in both simulations and the user test.</line>
+	</section>
+</section>
+
+<section class="slide" id="future">
+	<h3>Future works</h3>
+	<line>A collaborative filter can be incorporated with the 
+	GGBS algorithm to provide better estimation of conditional probabilities $\pi_{\Theta^i}$.</line><br><br>
+	<line>An existing GGBS algorithm that handles responses with 
+	error will be incorporated to improve the robustness of the algorithm.</line><br><br>
+	<line>Multiple choice instead of pairwise comparison will be considered.</line><br><br>
+</section>
+
+<section class="slide">
+	<line style="position:absolute;left:0;right:0;text-align:center;font-size:80%;top:90%;">
+	presentation available at http://yirenumich.appspot.com/idetc2013a.html</line>
+	<titleline>Thank you all for attending.<br>What questions do you have?</titleline>
+	<div style="position:absolute;top:60%;padding-left:5%;">
+		<div style="float:left;width:10%;">
+			<img style="width:100px;height:150px;margin:0;padding:0;display:inline;" src="images/idetc2012c/yiren2012jul.png"></td>
+		</div>
+		<div style="float:left;width:20%;padding-right:3%;">
+			<p style="font-size:80%;margin-left:0%;">Research Fellow<br>
+			Optimal Design Lab<br>University of Michigan<br>
+			yiren@umich.edu<br>yirenumich.appspot.com</p></td>
+		</div>
+		
+		<div style="float:left;width:10%;">
+			<img style="width:110px;height:150px;margin:0;padding:0;display:inline;" src="images/idetc2013a/clayscott.jpg"></td>
+		</div>
+		<div style="float:left;width:20%;padding-right:3%;">
+			<p style="font-size:80%;margin-left:0%;">Associate Professor<br>
+			Electrical Engineering and Computer Science<br>University of Michigan
+			<br>clayscot@umich.edu<br>web.eecs.umich.edu/~cscott/</p>
+		</div>
+		
+		<div style="float:left;width:10%;">
+			<img style="width:100px;height:150px;margin:0;padding:0;display:inline;" src="images/idetc2012c/panos.png"></td>
+		</div>
+		<div style="float:left;width:20%;">
+			<p style="font-size:80%;margin-left:0%;">Professor<br>
+			Optimal Design Lab<br>University of Michigan<br>
+			pyp@umich.edu<br>ode.engin.umich.edu</p>
+		</div>
+	</div>
+</section>
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+<!-- End extension snippets. -->
+
+<!-- Grab CDN jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="resource/deck/jquery-1.7.2.min.js"><\/script>')</script>
+
+<!-- Required JS files. -->
+<script src="resource/slides/deck/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="resource/slides/deck/core/deck.core.js"></script>
+<script src="resource/slides/deck/extensions/hash/deck.hash.js"></script>
+<script src="resource/slides/deck/extensions/menu/deck.menu.js"></script>
+<script src="resource/slides/deck/extensions/goto/deck.goto.js"></script>
+<script src="resource/slides/deck/extensions/status/deck.status.js"></script>
+<script src="resource/slides/deck/extensions/navigation/deck.navigation.js"></script>
+<script src="resource/slides/deck/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	});
+</script>
+</body>
+</html>

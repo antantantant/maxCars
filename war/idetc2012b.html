@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+
+	<title>idetc2012b Presentation</title>
+	<!-- Required stylesheet -->
+	<link rel="stylesheet" href="resource/slides/deck/core/deck.core.css">
+	<!-- Extension CSS files go here. Remove or add as needed. -->
+	<link rel="stylesheet" href="resource/slides/deck/extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/status/deck.status.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="resource/slides/deck/extensions/scale/deck.scale.css">
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="resource/slides/deck/themes/transition/fade.css">
+	<!-- Required Modernizr file -->
+	<script src="resource/slides/deck/modernizr.custom.js"></script>
+    <!-- 	Customized stylesheet and .js -->
+	<link rel="stylesheet" href="css/myPresentation.css">
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<link href="css/spinner.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="scripts/jquery-latest.min.js"></script>	
+	<script type="text/javascript" src="scripts/easyload-tags.js"></script>
+	<script type="text/javascript" src="scripts/jsMath/plugins/spriteImageFonts.js"></script>
+	<script type="text/javascript" src="scripts/tex2math.js"></script>
+</head>
+
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+<section class="slide">
+	<titleline>On the Use of Active Learning <br> in Engineering Design</titleline>
+	<author>Yi Ren (Max) and Panos Papalambros</author>
+	<affiliation>University of Michigan, Ann Arbor.    |    IDETC, Chicago, Aug. 15, 2012</affiliation>
+</section>
+
+<section class="slide">
+	<h3>Motivation</h3>
+	<section class="slide"><line>Many design studies rely on real-world data.</line></section><br>
+	<section class="slide"><line>For example, we use simulation data in optimization or market data in market share prediction (conjoint analysis). These are regression problems.</line><br>
+	<citation>Jones et al. (1998), Michalek et al. (2005), Frischknecht et al. (2009), and many others</citation>
+	</section>
+	<section class="slide"><line>In other cases, we use classification to identify feasible design regions. </line><br>
+	<citation>Basudhar and Missoum (2010), Malak and Paredis (2010), Alexander et al. (2011)</citation>
+	</section><br>
+	<section class="slide"><line>Practical probelm: Acquiring labeled data can be expensive, e.g. through experiments or consumer surveys.</line></section>
+	<section class="slide"><highlight>Active learning: Start with a small set of labeled data, and iteratively find the most "valuable" queries (a new experiment or survey question) based on current knowledge (the classification or regression model). </highlight></section>
+</section>
+
+<section class="slide">
+	<h3>Overview</h3>
+	<section class="slide"><line>Objective: To review and show commonality of active learning algorithms proposed from computer and marketing sciences;</line></section>
+	<section class="slide"><line>and to compare active learning with D-optimal design on classification and conjoint analysis problems.</line></section><br>
+	<section class="slide"><line style="text-height:40px;">Things to cover in this talk:</line><br><br>
+						   <line style="text-height:40px;">* Exploration vs. exploitation</line><br>
+						   <line style="text-height:20px;">* Active learning in classification and conjoint analysis</line><br>
+						   <line style="text-height:20px;">* Tests and conclusions </line>
+	</section>
+</section>
+
+<section class="slide">
+	<subtitleline>Exploration vs. exploitation</subtitleline>
+	<line style="position:absolute;top:55%;">* Definitions of exploratory and exploitative queries</line><br>
+	<line style="position:absolute;top:65%;">* The difficulty of balancing the two</line>
+</section>
+
+<section class="slide">
+	<h3>Definition of an exploratory query</h3>
+	<line style="font-size:100%;">Geometrically, an exploratory query is farthest away from previous ones to uncover the design space;<br> 
+	Statistically, it minimizes the variance of the learned model.</line><br><br>
+	<img style="width:50%;height:50%;margin-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/exploration.png">
+	<section class="slide"><highlight style="font-size:100%;">An exploratory query does not depend on learning. D-optimal, Latin hypercube designs are exploratory.</highlight></section>
+</section>
+
+<section class="slide">
+	<h3>Definition of an exploitative query</h3>
+	<line style="font-size:100%;">An exploitative query is purely based on learned model and aims to improve that model.</line><br>
+	<section class="slide"><img style="width:30%;height:30%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/exploitation.png"><br>
+	<line style="font-size:100%;">In a classification problem, an exploitative query on the current decision boundary 
+	will improve the classification.</line></section>
+</section>
+
+<section class="slide">
+	<h3>Exploration or exploitation?</h3>
+	<section class="slide"><line style="font-size:100%;">The choice is problem-dependent. The difficulty is that we don't know the problem beforehand.</line><br><br>
+	<img style="width:60%;height:60%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/difficulty.png">
+	</section>
+	<section class="slide"><highlight style="font-size:100%;">This paper follows existing research to use a fixed exploration-exploitation balance. Other heuristics will be investigated.</highlight></section>
+</section>
+
+
+<section class="slide">
+	<subtitleline>Active learning in classification (binary) and conjoint analysis</subtitleline>
+	<line style="position:absolute;top:55%;">* Show the similarity between the two problems</line><br>
+	<line style="position:absolute;top:65%;">* Introduce existing active learning strategies for each problem</line>
+</section>
+
+<section class="slide">
+	<h3>Classification problem and its solution</h3>
+	<section class="slide"><line style="font-size:100%;">Given data $\{x_i,y_i\}_{i=1}^n$, 
+	assuming a model $y = sign(w^Tx)$, we tune $w$ to maximize the margin between the two classes - a Support Vector Machine solution.</line>  <citation>Vapnik (1998), Cristianini and Shawe-Taylor (2001)</citation><br><br>
+	<img style="width:25%;height:25%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/classification.png">
+	</section>
+	<section class="slide"><line style="font-size:100%;">The SVM formulation maximizes the margin $1/w^Tw$ and minimizes the training error.</line>
+	<div id="equation">
+	$\begin{equation}
+	w^* = \mbox{argmin} \sum_{i=1}^n \max\{0,1-y_iw^Tx_i\}+Cw^Tw.
+	\end{equation}$</div>
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Conjoint analysis: A special regression problem, and its solution</h3>
+	<section class="slide"><line style="font-size:100%;">Given data $\{x_i\}_{i=1}^n$ and comparison set $\mathcal{I}$. 
+	Assuming a "utility" model $f(x) = w^Tx$. $f(x_{i_1})>f(x_{i_2})$ for any $\{i_1, i_2\} \in \mathcal{I}$. <br>Find $w$ that complies with the observation.</line><br>
+	<img style="width:30%;height:30%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/conjoint.png">
+	</section>
+	<section class="slide"><div id="equation">
+	$\begin{equation}
+	w^* = \mbox{argmin} \sum_{\forall\{i_1,i_2\}\in \mathcal{I}} \max\{0,1-w^T(x_{i_1}-x_{i_2})\}+Cw^Tw.
+	\end{equation}$</div>
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Similarity between classification and conjoint analysis</h3>
+	<line style="font-size:100%;">Considering <em>the difference of a pair</em> $(x_{i_1}-x_{i_2})$ as a query, the two problems are the same.</line><br><br>
+	<line style="font-size:100%;">Classification training:</line><br>
+	<div id="equation"> 
+	$\begin{equation}
+	w^* = \mbox{argmin} \sum_{i=1}^n \max\{0,1-w^T(y_ix_i)\}+Cw^Tw.
+	\end{equation}$</div><br>
+	<line style="font-size:100%;">Conjoint analysis training:</line><br>
+	<div id="equation"> 
+	$\begin{equation}
+	w^* = \mbox{argmin} \sum_{\forall\{i_1,i_2\}\in \mathcal{I}} \max\{0,1-w^T(x_{i_1}-x_{i_2})\}+Cw^Tw.
+	\end{equation}$</div>
+	<br>
+<!-- 	<section class="slide"><line style="font-size:100%;">Both problems are convex and can be solved using their dual formulations.</line></section> -->
+<!-- 	<section class="slide"><line style="font-size:100%;">Nonlinear kernels can be applied, i.e., data can be mapped to an arbitrary feature space for training if not separable in the original data space.</line></section> -->
+</section>
+
+<section class="slide">
+	<h3>Active learning in classification</h3>
+	<section class="slide"><highlight>Reduce the feasible space of $w$ as much as you can.</highlight><br>
+	<line>Tong and Koller (2001) showed that an exploitative query $x$ is to half the feasible space of $w$.	The feasible space of $w$ is defined by $y_iw^Tx_i \geq 0$ and $w^Tw = 1$ (highlighted arc).</line><br>
+	<img style="width:30%;height:30%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/vspace.png"><br>
+	<line>This can be approximately achieved by $x: ~x^Tw^* = 0$.</line></section>
+
+	<section class="slide"><highlight>An exploitative query is on the current decision boundary.</highlight></section>
+</section>
+
+<section class="slide">
+	<h3>Active learning in conjoint analysis</h3>
+	<section class="slide"><line style="font-size:100%;">Theorectically, an exploitative query $z = x_1 - x_2$ tries to decrease the variance of $w^*$.<br> This can be achieved by $z: ~z^Tw^* = 0$. Proof is provided in backup slides.</line>
+	<section class="slide"><highlight style="font-size:100%;">An exploitative query represents two points that cannot be differentiated by the current model.</highlight></section> 
+	</section>
+	<section class="slide"><line style="font-size:100%;">More than one candidate may satisfy the exploitative criterion, therefore an exploratory criterion can be added. </line></section>
+	<section class="slide"><line style="font-size:100%;">Abernethy et al. (2007) proposed to find a query $z$ that is perpendicular to $w^*$ can is in the direction to mostly increase the volume of $H = Z^TZ$.</line><br>
+	<img style="width:50%;height:50%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/project.png">
+	</section>
+</section>
+
+<section class="slide">
+	<subtitleline>Tests and results</subtitleline>
+	<line style="position:absolute;top:55%;">To compare active learning with D-optimal design on various problems</line><br>
+	<line style="position:absolute;top:65%;">* Testing algorithm</line><br>
+	<line style="position:absolute;top:75%;">* Test set-up</line>
+	<line style="position:absolute;top:85%;">* Results</line>
+</section>
+
+<section class="slide">
+	<h3>Testing algorithm, using classification as an example</h3>
+	<section class="slide"><line style="font-size:90%;">1. An initial set is labeled.</line></section>
+	<section class="slide"><line style="font-size:90%;">2. Train the current model using the current data to get $w^*$</line>
+	</section>
+	<section class="slide"><line style="font-size:90%;">3. Find a query that balances exploitation and exploration<br>
+	&nbsp;&nbsp; 3.1 Calculate the covariance approximation $H = CI+X^TX$ and project it to the plane of $w^*$. C = 1/iteration counter.<br>
+	&nbsp;&nbsp; 3.2 Find $\bar{x}$ as the eigenvector of the second smallest eigenvalue of the projected $H$.<br>
+	&nbsp;&nbsp; 3.3 Derive a new query $x$ with:</line>
+	<div id="equation">
+	$\begin{equation}
+	x = \mbox{argmin} |x^Tw^*| - |x^T\bar{x}|
+	\end{equation}$</div>
+	</section>
+	<section class="slide"><line style="font-size:90%;">4. If maximum iteration number not reached, go to 2.</line></section>
+	<section class="slide"><highlight style="font-size:90%;">This is compared with a D-optimal design. We create a large set of random DOEs and pick the one that has the largest $det(X^TX)$.</highlight></section>
+	<section class="slide"><highlight style="font-size:90%;">Candidate queries are mapped to a feature space when a nonlinear model is needed: 
+	$\Phi(x)_i = \exp(-\lambda||x-x_i||^2)$, where $\lambda = $ 1/candidate number.</highlight></section>
+</section>
+
+<section class="slide">
+	<h3>Binary classification test set-up</h3>
+	<img style="width:70%;height:70%;margin-left:15%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/test1.png"><br>
+	
+	<section class="slide"><line style="font-size:100%;">
+	The test performance is measured by the error rate:</line>
+	<div id="equation">
+	$\begin{eqnarray}
+	e = && \mbox{number of wrongly labeled candidates} \\
+	&&/\mbox{total number of candidates}.
+	\end{eqnarray}$</div>
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Classification test result</h3>
+	<line style="font-size:100%;">Comparison on mean error rates (lower the better). 100 independent runs per case.</line><br>
+	<img style="width:50%;height:50%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/result1.png"><br>
+	<section class="slide"><line style="font-size:100%;">
+	1. Active learning and D-optimal design have similar performance under small query sizes; The former outperforms the latter under large query sizes.</line></section>
+	<section class="slide"><line style="font-size:100%;">
+	2. Results from test 1 (one boundary to learn) and test 4 (3 disconnected boundaries to learn) demonstrates the case-dependency of exploration vs. exploitation strategies.</line></section>
+<!-- 	<section class="slide"><line style="font-size:100%;"> -->
+<!-- 	3. Neither algorithms performs well on Test 3 due to limited observations from one class.</line></section> -->
+</section>
+
+<section class="slide">
+	<h3>Conjoint analysis test set-up</h3>
+	<section class="slide"><line style="font-size:90%;">Regression of the following test functions based on pairwise comparisons:</line>
+	<div id="equation" style="font-size:80%">
+	$\begin{eqnarray}
+	&&\mbox{Linear}&&f_1(x,y) = x + y \\
+	&&\mbox{Polynomial}&&f_2(x,y) = x^2 + xy -y^3 \\
+	&&\mbox{Branin}&&f_3(x,y) = (y-5.1x^2/4\pi^2+5x/\pi-6)^2 + 10(1-1/8\pi)\cos(x)+10 \\
+	&&\mbox{Camelback}&&f_4(x,y) = (4-2.1x^2+x^4/3)x^2+xy+(-4+4y^2)y^2
+	\end{eqnarray}$</div>
+	</section>
+	<section class="slide"><line style="font-size:90%;">Functions are defined on the discrete set</line>
+	<div id="equation" style="font-size:70%">
+	$\begin{eqnarray}
+	\{[x,y] ~|~ x,y \in \{-1,-0.5,0,0.5,1\} \};
+	\end{eqnarray}$
+	</div>
+	<line style="font-size:90%;">Candidate queries are enumerated pairs from this set (300 in total). Performance is measured by the error rate:</line>
+	<div id="equation" style="font-size:70%">
+	$\begin{equation}
+	e = \mbox{number of wrongly comparied candidates} /\mbox{total number of candidates}.
+	\end{equation}$
+	</div>	
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Conjoint analysis test result</h3>
+	<line style="font-size:100%;">Comparison on mean error rates (lower the better). 100 independent runs per case.</line><br>
+	<img style="width:50%;height:50%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/result2.png"><br>
+	<section class="slide"><line style="font-size:100%;">
+	Same as in classification: Active learning and D-optimal design have similar performances under small query sizes; The former outperforms the latter under large query sizes.</line></section>
+</section>
+
+<section class="slide">
+	<h3>Conclusions</h3>
+	<section class="slide"><line>* Active learning can be useful to design studies relying on data analysis, especially when labels are expensive.</line></section><br>
+	<section class="slide"><line>* We reviewed theoretical developments of active learning from computer and marketing sciences and showed their similarities.</line></section><br>
+	<section class="slide"><line>* We showed using various simulation settings that overall active learning improves the learning performance better than D-optimal design along the increase of the query size.</line></section>
+</section>
+
+<section class="slide">
+	<h3>Future work</h3>
+	<section class="slide"><line>* The performance of active learning is problem-dependent and relies on tuning the balance between exploration and exploitation. Multi-armed bandit approach will be investigated.</line><br>
+		<img style="width:40%;height:40%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/bandit.png">
+	</section>
+<!-- 	<section class="slide"><line>* A design application will be used to validate the value of active learning in reducing cost on labeling designs.</line></section> -->
+</section>
+
+<section class="slide">
+	<line style="position:absolute;left:0;right:0;text-align:center;font-size:80%;top:90%;">presentation available at http://yirenumich.appspot.com/idetc2012b.html</line>
+	<titleline>Thank you all for attending.<br>What questions do you have?</titleline>
+	<table style="position:absolute;left:20%;right:10%;width:70%;top:60%;">
+	<tr>
+	<td style="width:15%;">
+	<img style="width:100px;height:150px;margin:0;padding:0;display:inline;" src="images/idetc2012c/yiren2012jul.png"></td>
+	<td>
+	<p style="font-size:80%;margin-left:0%;">Research Fellow<br>Optimal Design Lab<br>University of Michigan<br>yiren@umich.edu<br>yirenumich.appspot.com</p></td>
+	<td style="left: 50%;width:15%;">
+	<img style="width:100px;height:150px;margin-left:0;margin-bottom:0;padding:0;display:inline;" src="images/idetc2012c/panos.png"></td>
+	<td>
+	<p style="font-size:80%;margin-left:0%;">Professor<br>Optimal Design Lab<br>University of Michigan<br>pyp@umich.edu<br>ode.engin.umich.edu</td>
+	</tr>
+	</table>
+</section>
+
+<section class="slide">
+	<h3>Active learning in classification (1/3)</h3>
+	<section class="slide"><line style="font-size:100%;">The dual perspective of classification:</line><br>
+	<img style="width:40%;height:40%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/vspace.png"><br>
+
+	<line style="font-size:100%;">Denote the feasible space of $w$ as $\mathcal{V}$, defined by $y_iw^Tx_i \geq 0$ and $w^Tw = 1$ (highlighted arc).<br> $w^*$ is the center of the largest sphere in the feasible cone.</line>
+	<citation>Tong and Koller (2001)</citation>
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Active learning in classification (backup 2/3)</h3>
+	<line style="font-size:100%;">In order to efficiently get close to the true $w$, an exploitative query halfs $\mathcal{V}$.<br>
+	<section class="slide">Current $w^*$ can be approximated as the center of $\mathcal{V}$. Therefore, a query $x: ~x^Tw^* = 0$ is proposed, i.e., a query on the current boundary is an exploitative query. </line>
+	<citation>Tong and Koller (2001)</citation><br>
+	<img style="width:50%;height:50%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/simple.png">
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Active learning in classification (backup 3/3) </h3>
+	<section class="slide"><line style="font-size:100%;">More than one candidate may satisfy the exploitative criterion. 
+	Chang et al. (2005) recommended an exploratory query that maximizes the smallest angle with previous queries $x_i$:</line>
+	<div id="equation">$\begin{equation}x = \mbox{argmin} \max_i ~x^Tx_i/||x||||x_i||\end{equation}.$</div><br>
+	<img style="width:45%;height:45%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/minangle.png">
+	</section>
+	<section class="slide">Mixing exploration and exploitation with parameter $r$, one can derive a query by:
+	<div id="equation">$\begin{equation}x = \mbox{argmin} |x^Tw^*| + r\max_i ~x^Tx_i/||x||||x_i|| \end{equation}.$</div>
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Active learning in conjoint analysis (backup 1/2)</h3>
+	<section class="slide"><line style="font-size:100%;">From McFadden (1973), the covariance of estimation $w^*$ is the inverse of the information matrix $\Omega$:</line>
+	<div id="equation">$\Omega = Z^T \mbox{diag}(e_1,...,e_n)Z, \quad n \rightarrow \infty$,</div>
+	<line style="font-size:100%;">where each row of $Z$ is a pairwise difference:  $z_i = x_{i_1} - x_{i_2}$, and</line>
+	<div id="equation">$e_i = \exp(w^Tz_i)/(1+\exp(w^Tz_i))^2$.</div>
+	<line style="font-size:100%;">Assume $w=0$ (no prior knowledge of the model) to derive the D-optimal design criterion: $\max_Z det(Z^TZ)$.</line>
+	</section>
+	<section class="slide"><line style="font-size:100%;">An exploitative query $z: ~z^Tw^* = 0$, maximizing $\exp(z^Tw^*)/(1+\exp(z^Tw^*))^2$, 
+	will increase the determinant of $\Omega$ and reduce the variance of $w^*$.</line><citation>Arora and Huber (2001), Sandor and Wedel (2001) and others</citation></section>
+	<section class="slide"><highlight style="font-size:100%;">Exploitative queries represent two designs that cannot be differentiated by the current model.</highlight></section> 
+</section>
+
+<section class="slide">
+	<h3>Active learning in conjoint analysis (backup 2/2)</h3>
+	<section class="slide"><line style="font-size:90%;">Again more than one candidate may satisfy the exploitative criterion. Abernethy et al. (2007) proposed a regularized approximation of $\Omega$: $H = CI + Z^TZ$, with parameter $C$.</line></section>
+	<section class="slide"><line style="font-size:90%;">Project $H$ to the plane of $w^*$ and denote as $\bar{z}$ the eigenvector associated with the second smallest eigenvalue of the projected $H$. 
+	(The smallest eigenvalue is zero, assoicated with $w^*$)</line><br>
+	<highlight line style="font-size:90%;">$\bar{z}$ represents <em>the direction with the least data</em> in the plane perpendicular to $w^*$</highlight>
+	<img style="width:40%;height:40%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/project.png">
+	</section>
+	
+	<section class="slide"><line style="font-size:90%;">The active learning query $z$ can be derived by:</line>
+	<div id="equation">$\begin{equation}z = \mbox{argmin} |z^Tw^*| - r |z^T\bar{z}|/|z| \end{equation}.$</div>
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Summary of the active learning algorithms (backup)</h3>
+	
+	<section class="slide"><line style="font-size:100%;">Both machine learning (for classification) and marketing science (for conjoint analysis) have developed active learning algoirthms;</line></section>
+	<section class="slide"><line style="font-size:100%;">Both areas proposed theoretically sound exploitation and exploration schemes.</line></section><br>
+	<section class="slide"><line style="font-size:100%;">The difficulty of balancing exploitation and exploration is partially addressed by pre-determining a weighting factor. Other heuristics, 
+	e.g., multi-armed bandit method (<citation style="font-size:100%">Baram et al. (2004)</citation>), shall be investigated.</line><br>
+	<img style="width:50%;height:50%;margin-left:25%;margin-bottom:0;padding:0;display:inline;max-width:none;" src="images/idetc2012b/bandit.png">
+	</section>
+</section>
+
+<section class="slide">
+	<h3>Testing algorithm, using classification as an example (backup)</h3>
+	<section class="slide"><line style="font-size:80%;">1. An initial set is labeled.</line></section>
+	<section class="slide"><line style="font-size:80%;">2. Train the current model by solving the SVM problem:</line>
+	<div id="equation">
+	$\begin{equation}
+	w^* = \mbox{argmin} \sum_{i=1}^n \max\{0,1-y_iw^T\Phi(x_i)\}+Cw^Tw.
+	\end{equation}$</div>
+	</section>
+	<section class="slide"><line style="font-size:80%;">3. Calculate the covariance approximation $H = CI+X^TX$ and project it to the plane of $w^*$. C = 1/iteration counter.</line></section>
+	<section class="slide"><line style="font-size:80%;">4. Find $\bar{x}$ as the eigenvector of the second smallest eigenvalue of the projected $H$.</line></section>
+	<section class="slide"><line style="font-size:80%;">5. Derive a new query $x$ with $r = 1$:</line>
+	<div id="equation">
+	$\begin{equation}
+	x = \mbox{argmin} |x^Tw^*| - |x^T\bar{x}|
+	\end{equation}$</div>
+	</section>
+	<section class="slide"><line style="font-size:80%;">6. If maximum iteration number not reached, go to 3.</line></section>
+	<section class="slide"><highlight style="font-size:90%;">This is compared with a D-optimal design. We create a large set of random DOEs and pick the one that has the largest $det(X^TX)$.</highlight></section>
+	<section class="slide"><highlight style="font-size:90%;">Candidate queries are mapped to a feature space when a nonlinear model is needed: 
+	$\Phi(x)_i = \exp(-\lambda||x-x_i||^2)$, where $\lambda = $ 1/candidate number.</highlight></section>
+</section>
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="resource/slides/deck/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="resource/slides/deck/core/deck.core.js"></script>
+<script src="resource/slides/deck/extensions/hash/deck.hash.js"></script>
+<script src="resource/slides/deck/extensions/menu/deck.menu.js"></script>
+<script src="resource/slides/deck/extensions/goto/deck.goto.js"></script>
+<script src="resource/slides/deck/extensions/status/deck.status.js"></script>
+<script src="resource/slides/deck/extensions/navigation/deck.navigation.js"></script>
+<script src="resource/slides/deck/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	jsMath.ConvertTeX();
+	jsMath.Process();
+	});
+</script>
+</body>
+</html>

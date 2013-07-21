@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>maxDesign</title>
+	<link href="css/car.css" rel="stylesheet" type="text/css" />
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<link href="css/spinner.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="scripts/jquery-latest.min.js"></script>	
+	<script type="text/javascript" src="scripts/three.js"></script>
+	<script type="text/javascript" src="scripts/Detector.js"></script>
+	<script type="text/javascript" src="scripts/spinner.js"></script>
+	<script type="text/javascript" src="scripts/carModel.js"></script>
+	<script type="text/javascript" src="scripts/model_new.js"></script>
+	<script type="text/javascript" src="scripts/matchbox.js"></script>
+	<script type="text/javascript" src="scripts/bezierpatch.js"></script>
+	<script type="text/javascript" src="scripts/utility1.js"></script>	
+	<script type="text/javascript" src="scripts/utility2.js"></script>
+
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-22933052-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>	
+</head>
+<body>
+	<header id="header">
+		<nav id="sectionMenu">
+			<a href="/hello.html" title="Hello">Hello</a>
+			<a href="/interaction.html" title="Interaction">Interaction</a>
+			<a href="/collection.html" title="Collection">Collection</a>
+			<a href="/aboutmaxdesign.html" title="About">About</a>
+		</nav>
+	</header>
+	
+	<footer id="footer">
+		<p class="about"><a href="http://yirenumich.appspot.com">maxDesign </a> Max Yi Ren</p>
+		<p class="info" title="Navigate using your mouse &amp; Keyboard"></p>
+	</footer>
+	
+	<div id="surveyframe" hidden="hidden">
+		<a style="font-size: 250%; padding-left:35%;">Categorize Your Design:</a><br>
+		<a style="font-size: 150%; padding-left:30%;">(choose multiple style labels that apply to your design)</a>
+		<div id="surveyitem" class="topleft">
+			<img src="images\spacy.png"><br><br>
+			<a onclick="S.surveyset(0,0)"> Spacy </a>
+			<a onclick="S.surveyset(0,1)"> Compact </a>
+		</div>
+		<div id="surveyitem" class="topright">
+			<img src="images\rounded.png"><br><br>
+			<a onclick="S.surveyset(1,0)"> Rounded </a>
+			<a onclick="S.surveyset(1,1)"> Sharp </a>
+		</div>
+		<div id="surveyitem" class="bottomleft">
+			<img src="images\modern.png"><br><br>
+			<a onclick="S.surveyset(2,0)"> Modern </a>
+			<a onclick="S.surveyset(2,1)"> Classical </a>
+		</div>
+		<div id="surveyitem" class="bottomright">
+			<img src="images\luxury.png"><br><br>
+			<a onclick="S.surveyset(3,0)"> Luxury </a>
+			<a onclick="S.surveyset(3,1)"> Eco-friendly</a>
+		</div>
+	</div>
+	
+	<div id="go" hidden="hidden">
+		<a onclick="go()"> Submit & Continue >></a>
+	</div>
+	
+	<div id="interactionframe">
+		<div id="selectbutton" class="topleft">
+			<div id="modelframe1"></div></div>
+		<div id="selectbutton" class="topright">
+			<div id="modelframe2"></div></div>
+		<div id="selectbutton" class="bottomleft">
+			<div id="modelframe3"></div></div>
+		<div id="selectbutton" class="bottomright">
+			<div id="modelframe4"></div></div>
+	</div>
+
+	<div id="controlframe">
+		<div id="spinner"></div>
+		<div id="status"><a>Some rendering going on...Please wait</a></div>
+		<div id="cbutton" class="train"><a>Generate better designs</a></div>
+		<div id="cbutton" class="restart active"><a>Explore designs</a></div>
+		<div id="cbutton" class="submit"><a>Submit selected designs</a></div>
+		<div id="cbutton" class="confirm active" hidden="hidden"><a>Confirm</a></div>
+		<div id="cbutton" class="cancel active" hidden="hidden"><a>Cancel</a></div>
+		<div id="#003866" class="palette" style="left:68%;"></div>
+		<div id="#CC0000" class="palette" style="left:73%;"></div>
+		<div id="#eeeeee" class="palette" style="left:78%;"></div>
+		<div id="#777777" class="palette" style="left:83%;"></div>
+	</div>
+	
+	<div id="feedbackframe" hidden="hidden">
+		<div style="position:absolute;text-align:left;left:30%;top:40%;width:40%;">
+		<a style="text-decoration:none;font-size:150%;color:#cccccc;" href="mailto:yiren@umich.edu">Thank you for participating. 
+		I will continue to add features and fix bugs while your feedbacks are more than welcomed! 
+		You may contact me at yiren@umich.edu or help facebook/g+/twitter this project:)</a>
+		</div>
+	</div>
+	
+ 	<script type="text/javascript">
+		wspinner = new Spinner($('#spinner')[0], 'white');
+		S = new search('ego');
+		$("div#selectbutton").dblclick(function(){
+			if (!$(this).is(".selected")){
+				$(this).removeClass("active").addClass("selected");
+				var classname = $(this).attr("class");
+				switch (classname){
+					case "topleft selected":
+						S.currentY[0]=1;
+						break;
+					case "topright selected":
+						S.currentY[1]=1;
+						break;
+					case "bottomleft selected":
+						S.currentY[2]=1;
+						break;
+					case "bottomright selected":
+						S.currentY[3]=1;
+						break;	
+				}
+			}
+			else{
+				$(this).removeClass("selected").addClass("active");
+				var classname = $(this).attr("class");
+				switch (classname){
+					case "topleft active":
+						S.currentY[0]=0;
+						break;
+					case "topright active":
+						S.currentY[1]=0;
+						break;
+					case "bottomleft active":
+						S.currentY[2]=0;
+						break;
+					case "bottomright active":
+						S.currentY[3]=0;
+						break;	
+				}
+			}
+			if (eval(S.currentY.join('+'))>0){
+				if (!$("div#cbutton.train").is(".active")&&eval(S.currentY.join('+'))<4){$("div#cbutton.train").addClass("active");}
+				if (!$("div#cbutton.submit").is(".active")){$("div#cbutton.submit").addClass("active");}
+			}
+			else{
+				if ($("div#cbutton.train").is(".active")){$("div#cbutton.train").removeClass("active");}
+				if ($("div#cbutton.submit").is(".active")){$("div#cbutton.submit").removeClass("active");}
+			}
+		});
+		$("div#selectbutton").mouseover(function(){
+			if (!$(this).is(".selected")){$(this).addClass("active");}});
+		$("div#selectbutton").mouseup(function(){
+			S.track.push([S.iter,
+			              search_scene1.scene.__objects[1].rotation.z,
+			              search_scene2.scene.__objects[1].rotation.z,
+			              search_scene3.scene.__objects[1].rotation.z,
+			              search_scene4.scene.__objects[1].rotation.z,]);
+		});
+		$("div#selectbutton").mouseout(function(){
+			$(this).removeClass("active");});
+		$("div#cbutton").mouseover(function(){
+			if ($(this).is(".active")){$(this).removeClass("active").addClass("highlight");}});
+		$("div#cbutton").mouseout(function(){
+			if ($(this).is(".highlight")){$(this).addClass("active").removeClass("highlight");}});
+		
+		$("div#cbutton.train").click(function(){
+			if($("div#cbutton.train").is(".highlight")){
+				wspinner.show();
+				S.newpt();
+				S.currentY = [0,0,0,0];
+				$("div#selectbutton").removeClass("selected");
+				$("div#cbutton.train").removeClass("active").removeClass("highlight");
+				$("div#cbutton.submit").removeClass("active").removeClass("highlight");
+			}
+		});
+		$("div#cbutton.submit").click(function(){
+			if($("div#cbutton.submit").is(".highlight")){
+				$("div#cbutton.submit").hide();
+				$("#status a").text("By submitting the design(s) you will end the interaction. Continue?");
+				$("div#cbutton.confirm").show();
+				$("div#cbutton.cancel").show();
+			}
+		});
+		$("div#cbutton.confirm").click(function(){
+			wspinner.show();
+			S.store();
+			$("div#interactionframe").hide();
+			$("div#controlframe").hide();
+			$("div#feedbackframe").show();
+		});
+		$("div#cbutton.cancel").click(function(){
+			$("div#cbutton.confirm").hide();
+			$("div#cbutton.cancel").hide();
+			$("div#cbutton.submit").show();
+			$("#status a").text("Select up to three preferred designs by double clicking on the scene. Then choose to generate new designs or submit final ones.");
+		});
+		$("div#cbutton.restart").click(function(){
+			S.explore();
+		});
+		$($("div#surveyitem.topleft a")[0]).hover(function(){
+			$("img")[0].src = "images/spacy.png";
+		});
+		$($("div#surveyitem.topleft a")[1]).hover(function(){
+			$("img")[0].src = "images/compact.png";
+		});
+		$($("div#surveyitem.topright a")[0]).hover(function(){
+			$("img")[1].src = "images/rounded.png";
+		});
+		$($("div#surveyitem.topright a")[1]).hover(function(){
+			$("img")[1].src = "images/sharp.png";
+		});
+		$($("div#surveyitem.bottomleft a")[0]).hover(function(){
+			$("img")[2].src = "images/modern.png";
+		});
+		$($("div#surveyitem.bottomleft a")[1]).hover(function(){
+			$("img")[2].src = "images/classical.png";
+		});
+		$($("div#surveyitem.bottomright a")[0]).hover(function(){
+			$("img")[3].src = "images/luxury.png";
+		});
+		$($("div#surveyitem.bottomright a")[1]).hover(function(){
+			$("img")[3].src = "images/eco.png";
+		});
+		go = function(){
+			$("#surveyframe").hide();
+			$("#interactionframe").show();
+			$("#controlframe").show();
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+			S.initiate();
+			$("#go").hide();
+		};
+		for (var i=0;i<$(".palette").length;i++){
+			var a = $($(".palette")[i]);
+			a.css({'background-color':a.attr('id')});
+			a.click(function(){
+				var str = this.attributes[0].value;
+				carUnselectedColor = parseInt(str.slice(1,str.length),16);
+				carSelectedColor = carUnselectedColor+1118481;
+				S.color = carUnselectedColor;
+				var lc = search_scene1.scene.children.length;
+				search_scene1.scene.__objects[1].children[0].material.color.setHex(carUnselectedColor);
+				search_scene2.scene.__objects[1].children[0].material.color.setHex(carUnselectedColor);
+				search_scene3.scene.__objects[1].children[0].material.color.setHex(carUnselectedColor);
+				search_scene4.scene.__objects[1].children[0].material.color.setHex(carUnselectedColor);
+				search_render();
+			});
+		}
+	</script>
+	<div class="share">
+		<ul>
+			<li class="twitter">
+				<span class="icon"><em>Share this on Twitter</em></span>
+				<span class="text">
+					<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yirenumich.appspot.com/hello.html" data-text="" data-count="horizontal" data-via="renyiumich">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				</span>
+			</li>
+			<li class="google">
+				<span class="icon"><em>Google Plus 1</em></span>
+				<span class="text"><g:plusone size="medium" href="http://yirenumich.appspot.com/hello.html"></g:plusone></span>
+			</li>
+			<li class="facebook">
+				<span class="icon"><em>Like this on Facebook</em></span>
+				<span class="text"><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fyirenumich.appspot.com%2Fhello.html&amp;layout=button_count&amp;show_faces=true&amp;width=110&amp;action=like&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe></span>
+			</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+		{lang: 'en-GB'}
+	</script>
+</body>
+</html>

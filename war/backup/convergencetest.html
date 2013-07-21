@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Matchbox3D</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="yirenumich.css" rel="stylesheet" type="text/css" />
+	<link href="convergencetest.css" rel="stylesheet" type="text/css" />
+	<link href="matchbox.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="scripts/lib.js"></script>
+	<script type="text/javascript" src="scripts/carModel.js"></script>
+	<script type="text/javascript" src="scripts/model.js"></script>
+	<script type="text/javascript" src="scripts/matchbox.js"></script>
+	<script type="text/javascript" src="scripts/bezierpatch.js"></script>
+	<script type="text/javascript" src="scripts/dataanalysis.js"></script>
+	<script type="text/javascript" src="scripts/utility1.js"></script>
+	<script type="text/javascript" src="scripts/utility2.js"></script>	
+	<script type="text/javascript" src="scripts/test-utils.js"></script>	
+	<script>window.onload = function(){var fadein = document.getElementById("fadein").style.opacity = "1";};</script>
+<!-- 	google analytics stuff below -->
+	<script type="text/javascript">
+	
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-22933052-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>	
+</head>
+<body>
+	<div id="fadein">
+		<div id="background"></div>
+		<div id="background_ext"></div>
+		<div id="header">
+				<ul>
+					<li><a href="instruct.html">Instruction</a></li>
+					<li><a href="index.html">Application</a></li>
+					<li><a href="log.html">Data</a></li>
+					<li><a href="#">Test</a></li>
+					<li><a href="about.html">About</a></li>
+					
+				</ul>
+		</div>
+		<div id="target">
+			<script type="text/javascript">
+			t = new target();
+			t.initiate();
+			</script>
+			
+				<p>Welcome to the "perception acuteness" test. 
+				Let me explain the rules: On the left is your target. 
+				From the 6 designs below, pick whichever ones that are closer to the target. 
+				You may also pick nothing if none are close enough. 
+				Clicking the "Next" button leads you to the next round, 
+				where better guesses are made by the algorithm based on your feedback. 
+				If you find one design close enough to the target, select that design and only that design then click to finish.
+				If you failed to find one, also click to finish and let us know how the algorithm fails.
+				</p>
+
+		</div>		
+		<div id="search">
+			<script type="text/javascript">
+			method = "ego";
+			if (Math.random()<=0.5){method="ga";}
+			s = new search(6, "ego");
+			s.initiate();
+			</script>
+		</div>
+		<div id="submitbutton" onclick='confirm(s)'>
+			<a >Click to Finish</a>
+		</div>
+		<div id="confirmbutton" onclick='jumptouser(s)'></div>
+		<div id="cancelbutton" onclick='cancel()'></div>
+		
+		<div id="trainbutton" onclick='newpt(s)'>
+			<a >Next</a>
+		</div>
+		<div id="trainingbutton"></div>		
+		<div id="process_indicator"></div>
+		<div id="toolbox_sync" onclick='checkthebox()'>
+			<input type="checkbox" name="sync" checked="yes"/> Sync viewpoint</br>
+		</div>
+		<div id="toolbox_reset">
+			<a onclick='resetviewpoint(t, s)'>Reset Viewpoint </a>
+		</div>
+		<div id="username">
+			<p> We just need a tiny bit of info from you.
+			<form>
+				First name: <input type="text" name="firstname"/><br />
+				Last name: <input type="text" name="lastname" />	
+			</form>
+		</div>
+		<div id="sati">
+			<a>Did you successfully get close enough to the target?</a>
+			<form>
+				<input type="radio" name="sati" value=1 checked=true/> Yes<br />
+				<input type="radio" name="sati" value=0 /> No<br />
+			</form>
+		</div>
+		<div id="thank"><a>Thank you for your time!</a></div>
+		<div id="title">
+			<img src="images/title.png" />
+		</div>
+		<div id="footer">
+			<p id="legal"> 2011 © Yi Ren | Best Viewed With Chrome 10</p>
+		</div>
+	</div>
+</body>
+</html>

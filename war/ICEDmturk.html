@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>maxDesign</title>
+	<link href="css/ICEDmturk.css" rel="stylesheet" type="text/css" />
+	<link href="css/font.css" rel="stylesheet" type="text/css" />
+	<link href="css/spinner.css" rel="stylesheet" type="text/css" />
+	<link href="css/ui-darkness/jquery-ui-1.9.1.custom.css" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="scripts/jquery-latest.min.js"></script>	
+	<script type="text/javascript" src="scripts/jquery-ui-1.9.1.custom.min.js"></script>
+	<script type="text/javascript" src="scripts/three.js"></script>
+	<script type="text/javascript" src="scripts/Detector.js"></script>
+	<script type="text/javascript" src="scripts/carModel.js"></script>
+	<script type="text/javascript" src="scripts/model_new.js"></script>
+	<script type="text/javascript" src="scripts/matchbox.js"></script>
+	<script type="text/javascript" src="scripts/bezierpatch.js"></script>
+	<script type="text/javascript" src="scripts/ICEDmturk.js"></script>
+	<script type="text/javascript" src="scripts/spinner.js"></script>
+	
+
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-22933052-1']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>	
+</head>
+<body>
+	<div id="finish" class="marker" hidden="hidden">
+		<div style="padding:120px 80px 0 80px;"><a style="font-size:250%;color:#999999;">Your responses are now submitted. Again, thank you for contributing to this project. For Mechanical Turk
+		users, please click MTURK to redeem the code.<br>
+		You can now close the tab or click Restart to have a new survey. If you are interested in car design, please visit</> <a href="forICED.html" style="text-decoration:none; font-size:250%;color:#ADD8E6;"> here </a>
+		<a style="font-size:250%;color:#999999;"> to have more fun.</a><br><br><a style="font-size:200%;color:#995555;">ATTENTION: This survey only works on Chrome and Firefox browsers.</a></div>
+		<div id="cbutton" class="restart active"><a>Restart</a></div>
+		<div id="cbutton" class="mturk active"><a>MTurk</a></div>
+	</div>
+	<div id="container">
+	<h1 style="color:#777777">oCar - ICED MTurk Test</h1>
+		<div id="question"></div>
+		<div id="spinner"></div>
+		<div id="displayframe1">
+		</div>
+		<div id="displayframe2">
+		</div>
+	<div id="controlframe">
+		<div id="cbutton" class="mturkLeft active"><a>Choose this</a></div>
+		<div id="cbutton" class="mturkRight active"><a>Choose this</a></div>
+		<div id="cbutton" class="mturkHard active"><a>Hard to say</a></div>
+		<div id="cbutton" class="mturkConfirm"><a>Confirm</a></div>
+	</div>
+	</div>
+	
+ 	<script type="text/javascript">
+ 		wspinner = new Spinner($('#spinner')[0], 'white');
+		wspinner.show();
+ 		T = new test();
+		$("div#cbutton.mturkLeft").click(function(){
+			if(T.y[T.current]==null){
+				T.y[T.current]=1;
+				$("div#cbutton.mturkConfirm").addClass("active");
+				$("div#cbutton.mturkLeft").removeClass("active").addClass("selected");
+				$("div#displayframe1").addClass("selected");
+			}
+			else{
+				if(T.y[T.current]==-1){
+					T.y[T.current]=1;
+					$("div#cbutton.mturkConfirm").addClass("active");
+					$("div#cbutton.mturkLeft").removeClass("active").addClass("selected");
+					$("div#displayframe1").addClass("selected");
+					$("div#cbutton.mturkRight").removeClass("selected").addClass("active");
+					$("div#displayframe2").removeClass("selected");
+				}
+				else if(T.y[T.current]==0){
+					T.y[T.current]=1;
+					$("div#cbutton.mturkConfirm").addClass("active");
+					$("div#cbutton.mturkLeft").removeClass("active").addClass("selected");
+					$("div#displayframe1").addClass("selected");
+					$("div#cbutton.mturkHard").removeClass("selected").addClass("active");
+				}
+				else{
+					T.y[T.current]=null;
+					$("div#cbutton.mturkConfirm").removeClass("active");
+					$("div#cbutton.mturkLeft").removeClass("selected").addClass("active");
+					$("div#displayframe1").removeClass("selected");					
+				}
+			}
+		});
+		$("div#cbutton.mturkRight").click(function(){
+			if(T.y[T.current]==null){
+				T.y[T.current]=-1;
+				$("div#cbutton.mturkConfirm").addClass("active");
+				$("div#cbutton.mturkRight").removeClass("active").addClass("selected");
+				$("div#displayframe2").addClass("selected");
+			}
+			else{
+				if(T.y[T.current]==1){
+					T.y[T.current]=-1;
+					$("div#cbutton.mturkConfirm").addClass("active");
+					$("div#cbutton.mturkRight").removeClass("active").addClass("selected");
+					$("div#displayframe2").addClass("selected");
+					$("div#cbutton.mturkLeft").removeClass("selected").addClass("active");
+					$("div#displayframe1").removeClass("selected");
+				}
+				else if(T.y[T.current]==0){
+					T.y[T.current]=-1;
+					$("div#cbutton.mturkConfirm").addClass("active");
+					$("div#cbutton.mturkRight").removeClass("active").addClass("selected");
+					$("div#displayframe2").addClass("selected");
+					$("div#cbutton.mturkHard").removeClass("selected").addClass("active");
+				}
+				else{
+					T.y[T.current]=null;
+					$("div#cbutton.mturkConfirm").removeClass("active");
+					$("div#cbutton.mturkRight").removeClass("selected").addClass("active");
+					$("div#displayframe2").removeClass("selected");					
+				}
+			}
+		});
+		$("div#cbutton.mturkHard").click(function(){
+			if(T.y[T.current]==null){
+				T.y[T.current]=0;
+				$("div#cbutton.mturkHard").removeClass("active").addClass("selected");
+				$("div#cbutton.mturkConfirm").addClass("active");
+				$("div#cbutton.mturkRight").removeClass("selected").addClass("active");
+				$("div#cbutton.mturkRight").removeClass("selected").addClass("active");
+				$("div#displayframe1").removeClass("selected");
+				$("div#displayframe2").removeClass("selected");
+			}
+			else{
+				if(T.y[T.current]==1){
+					T.y[T.current]=0;
+					$("div#cbutton.mturkHard").removeClass("active").addClass("selected");
+					$("div#cbutton.mturkConfirm").addClass("active");
+					$("div#cbutton.mturkLeft").removeClass("selected").addClass("active");
+					$("div#displayframe1").removeClass("selected");
+				}
+				else if(T.y[T.current]==-1){
+					T.y[T.current]=0;
+					$("div#cbutton.mturkHard").removeClass("active").addClass("selected");
+					$("div#cbutton.mturkConfirm").addClass("active");
+					$("div#cbutton.mturkRight").removeClass("selected").addClass("active");
+					$("div#displayframe2").removeClass("selected");					
+				}
+				else{
+					T.y[T.current]=null;
+					$("div#cbutton.mturkHard").removeClass("selected").addClass("active");
+					$("div#cbutton.mturkConfirm").removeClass("active");
+				}
+			}
+		});
+		$("div#cbutton.mturkConfirm").click(function(){
+			if($("div#cbutton.mturkConfirm").hasClass("active")){
+				$("div#cbutton.mturkConfirm").removeClass("active");
+				$("div#cbutton.mturkLeft").removeClass("selected").addClass("active");
+				$("div#cbutton.mturkHard").removeClass("selected").addClass("active");
+				$("div#cbutton.mturkRight").removeClass("selected").addClass("active");
+				$("div#displayframe1").removeClass("selected");
+				$("div#displayframe2").removeClass("selected");
+
+				if(T.current<T.ntest-1){
+					T.next();
+					$("div#question p").html("Please select the more <em>"+T.name+"</em> design from the following two and click CONFIRM. Drag mouse to rotate the designs. There are "+(T.ntest-T.current)+" comparisons remaining.")
+				}
+				else{
+					$("div#finish.marker").show();
+					T.submit();
+				}
+			}
+		});
+		$("div#cbutton.restart").click(function(){
+			$("div#finish.marker").hide();
+			window.location.reload(false);
+		});
+		$("div#cbutton.mturk").click(function(){
+			if(T.current>0){
+				getMTurkCodePost();
+			}
+			else{
+				alert("The survey is not finished yet.")
+			}
+		});
+		
+	</script>
+</body>
+</html>
