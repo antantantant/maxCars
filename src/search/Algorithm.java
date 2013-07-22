@@ -263,7 +263,7 @@ public class Algorithm {
 	private List<Double> scatterGA(){
 		int POP_LIMIT = 50;
 		int TOURNAMENT_ARITY = POP_LIMIT;
-		int NUM_GENERATIONS = 100;
+		int NUM_GENERATIONS = 500;
 		double CROSSOVER_RATE = 1;
 		double ELITISM_RATE = 0.9;
 		double MUTATION_RATE = 0.1;
@@ -304,6 +304,7 @@ public class Algorithm {
 
 	private double calculateFitness(double[] c) {
 		double f = decisionf(c);
+		double d = distance(c);
 		double fitness = merit(1.0,1.0,f,0);
 		return fitness;
 	}
@@ -355,6 +356,26 @@ public class Algorithm {
 			f+= w[i]*(kernel(goodfeature,feature)-kernel(badfeature,feature));
 		}
 		return f;
+	}
+	
+	private double distance(double[] x){
+		double d = 1e6;
+		double[] feature = calOneFeature(x);
+		double l = X.length;
+		for (int i = 0; i<l; i++){
+			feature[i]= (feature[i]-mean[i])/std[i];
+		}
+		double tempd;
+		double[] samplefeature;
+		for (int i = 0; i<l;i++){
+			samplefeature = calOneFeature(X[i]);
+			for (int j = 0; j<l; j++){
+				samplefeature[j]= (samplefeature[j]-mean[j])/std[j];
+			}
+			tempd = kernel(samplefeature,feature);
+			if (tempd<d){d=tempd;}
+		}
+		return d;
 	}
 	
 	private double[] JSON2J(JSONArray a){

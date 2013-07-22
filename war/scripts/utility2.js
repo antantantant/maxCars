@@ -251,9 +251,9 @@ search.prototype.explore = function(){
         this.X.push(this.currentX[i].slice(0));
     }
 	search_scene1.update(this.currentX[0],0);
-	search_scene2.update(this.currentX[1],1);
-	search_scene3.update(this.currentX[2],2);
-	search_scene4.update(this.currentX[3],3);
+	search_scene2.update(this.currentX[1],0);
+	search_scene3.update(this.currentX[2],0);
+	search_scene4.update(this.currentX[3],0);
 	search_render();
 };
 
@@ -287,9 +287,9 @@ search.prototype.loadModels = function(){
 	for (var i = 0; i<this.ind.length; i++)
 	this.currentX[i] = this.X[this.ind[i]];
 	search_scene1.update(this.currentX[0],0);
-	search_scene2.update(this.currentX[1],1);
-	search_scene3.update(this.currentX[2],2);
-	search_scene4.update(this.currentX[3],3);
+	search_scene2.update(this.currentX[1],0);
+	search_scene3.update(this.currentX[2],0);
+	search_scene4.update(this.currentX[3],0);
 	search_render();
 	$("div#cbutton.train a").text("Generate better designs");
 	wspinner.hide();

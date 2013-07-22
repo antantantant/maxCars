@@ -29,12 +29,13 @@
 	</header>
 	
 	<footer id="footer">
-		<p class="about"><a href="http://yirenumich.appspot.com">maxDesign </a> Max Yi Ren</p>
+		<p class="about"><a href="http://maxyiren.appspot.com"></a> Max Yi Ren</p>
 		<p class="info" title="Navigate using your mouse &amp; Keyboard"></p>
 	</footer>
 	
-	<div id="surveyframe" hidden="hidden">
-		<a style="font-size: 250%; padding-left:35%;">Categorize Your Design:</a><br>
+	<div id="surveyframe">
+		<a style="font-size: 250%; padding-left:35%;">Categorize Your Design:</a>
+		<br></br>
 		<a style="font-size: 150%; padding-left:30%;">(choose multiple style labels that apply to your design)</a>
 		<div id="surveyitem" class="topleft">
 			<img src="images\spacy.png"><br><br>
@@ -58,11 +59,11 @@
 		</div>
 	</div>
 	
-	<div id="go" hidden="hidden">
+	<div id="go">
 		<a onclick="go()"> Submit & Continue >></a>
 	</div>
 	
-	<div id="interactionframe">
+	<div id="interactionframe" hidden="hidden">
 		<div id="selectbutton" class="topleft">
 			<div id="modelframe1"></div></div>
 		<div id="selectbutton" class="topright">
@@ -73,7 +74,7 @@
 			<div id="modelframe4"></div></div>
 	</div>
 
-	<div id="controlframe">
+	<div id="controlframe" hidden="hidden">
 		<div id="spinner"></div>
 		<div id="status"><a>Some rendering going on...Please wait</a></div>
 		<div id="cbutton" class="train"><a>Generate better designs</a></div>
@@ -235,10 +236,10 @@
 				carSelectedColor = carUnselectedColor+1118481;
 				S.color = carUnselectedColor;
 				var lc = search_scene1.scene.children.length;
-				search_scene1.scene.__objects[1].children[0].material.color.setHex(carUnselectedColor);
-				search_scene2.scene.__objects[1].children[0].material.color.setHex(carUnselectedColor);
-				search_scene3.scene.__objects[1].children[0].material.color.setHex(carUnselectedColor);
-				search_scene4.scene.__objects[1].children[0].material.color.setHex(carUnselectedColor);
+				search_scene1.scene.__objects[3].material.color.setHex(carUnselectedColor);
+				search_scene2.scene.__objects[3].material.color.setHex(carUnselectedColor);
+				search_scene3.scene.__objects[3].material.color.setHex(carUnselectedColor);
+				search_scene4.scene.__objects[3].material.color.setHex(carUnselectedColor);
 				search_render();
 			});
 		}
@@ -248,12 +249,12 @@
 			<li class="twitter">
 				<span class="icon"><em>Share this on Twitter</em></span>
 				<span class="text">
-					<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yirenumich.appspot.com/hello.html" data-text="" data-count="horizontal" data-via="renyiumich">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+					<a href="http://twitter.com/share" class="twitter-share-button" data-url="http://maxyiren.appspot.com/hello.html" data-text="" data-count="horizontal" data-via="renyiumich">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 				</span>
 			</li>
 			<li class="google">
 				<span class="icon"><em>Google Plus 1</em></span>
-				<span class="text"><g:plusone size="medium" href="http://yirenumich.appspot.com/hello.html"></g:plusone></span>
+				<span class="text"><g:plusone size="medium" href="http://maxyiren.appspot.com/hello.html"></g:plusone></span>
 			</li>
 			<li class="facebook">
 				<span class="icon"><em>Like this on Facebook</em></span>
