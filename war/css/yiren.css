@@ -27,7 +27,7 @@ ul{
 }
 
 .links:hover{
-	background-color: #eeeeee;
+	background-color: rgba(255,255,0,0.5);
 }
 
 #side {
@@ -101,7 +101,7 @@ ul{
 
 .myphoto {
 	position: absolute;
-	left: 430px;
+	left: 520px;
 	top: 55px;
 	float: right;
 	margin-left: 20px;
@@ -110,7 +110,7 @@ ul{
 #me {
 	position: absolute;
 	top: 55px;
-	width: 430px;
+	width: 520px;
 	font-size: 12pt;
 }
 
@@ -135,7 +135,7 @@ ul{
 }
 
 .highlight_font:hover{
-	background-color: #aaaaaa;
+	background-color: rgba(255,255,0,0.5);
 }
 
 #mywork .des{
