@@ -11,7 +11,7 @@
 	<body>
 		<div id="side">
 			<div id="title">
-				<b><a class="links", href="http://ode.engin.umich.edu/people/yiren/yiren.html">Max Yi Ren</a></b>
+				<b><a class="links", href="http://ode.engin.umich.edu/people/yiren/personalpageYi.html">Max Yi Ren</a></b>
 			</div>
 			<div id="info">
 				Research Fellow
@@ -51,42 +51,65 @@
 				<br>
 				<b>Current research</b><br><br>
 				
-				
-				<b>Project archive</b><br>
-				<b>Design Preference Elicitation</b><br>
-				We develop interaction methods to elicit preferred designs from users. 
-				Technically, the research contains three components: 
-				1) Learning interaction data to model user preferences, 
-				2) Proposing new designs to optimize the learned model from 1), 
-				and 3) Improving 2) by using crowd interaction data.  
+				<a class="highlight_font">Hybrid powertrain architecture design (with Alparslan Emrah Bayrak)</a><br>
+				<p>For a system with two motors and two planetary gears, <a class="links" href="resource/RenPapers/idetc2013b.pdf">
+				our previous research</a> showed that a thousand 
+				feasible configurations (driving modes) exist. As a powertrain may consist of multiple configurations 
+				(such as in Chevy Volt), this large number of candidate configurations will make the search of an optimal 
+				powertrain intractable. Existing studies often restrict the space for architecture search based on human 
+				experience and rules, excluding chances for discovering innovative designs. 
 				<br><br>
-				<em>Ongoing project: <a class="links" href="hello.html">carMesh</a></em>
+				Learning from existing 
+				configurations to form better search heuristics is therefore desired in such engineering tasks. While the 
+				idea already exists, e.g., in response surface methods, the particular difficulty here is that 
+				configurations are often represented as graphs (e.g., a powertrain configuration is commonly represented 
+				as a bond graph). Successful learning from graphical data requires a problem-specific extraction of graph 
+				features, on top of the large collection of graph properties.
+				</p>
+				<br><br>
+
+				<a class="highlight_font">Learning from crowd evaluations (with Alex Burnap)</a><br><br>
+				Learning from people has always been a challenge due to noisy human responses. 
+				In some cases, this is due to people's different level of understanding, e.g., whether 
+				people can evaluate building layouts correctly depends on their experience in this 
+				design topic; in other cases, it could be their own preferences that lead to different 
+				evaluations on the same design. For example, <a class="links" href="resource/RenPapers/iced2013.pdf">
+				my previous study</a> showed that when presented 
+				a pair of car designs and asked "which car looks safer",  half of the participants voted 
+				for the "stream-lined" design while the other half for the boxy one. 
+				<br><br>
+				Such differences in 
+				knowledge or preference could be explained by demographic background of people or 
+				identified through their social interactions including evaluations on other design 
+				topics. The key here is the development of learning algorithms that can extract 
+				high-level information to better explain the observations from the massive joint data of 
+				designs, people profiles and interactions. Existing feature extraction methods such as 
+				sparse-coding and restricted Boltzmann machines will be investigated.
 				<br><br><br>
 				
 				
-				<a class="highlight_font">Structured Design Representation</a><br>
-				Structured representation has been used in many evolutionary computation case studies. 
-				Such evolutionary schemes have the strength of exploration but lacks ability of learning. 
-				My interest is to investigate learning methods on structured data and apply them to enhance the evolution.
+				<b>Project archive and misc.</b><br></br>
+				<a class="links" href="hello.html">carMesh</a> (<a class="links" href="resource/RenPapers/jmd2011.pdf">Paper</a>):
+				<br>
+				This is an experiment where I tested 1) if there is anyway to automate designs according
+				to users' preference, avoiding the slow pace of evolutionary algorithms, 2) how complicated
+				a 3D modeling code is.
 				<br><br>
-				<em>Ongoing project: Hybrid electric vehicle transmission configuration design (with Alparslan Emrah Bayrak)</em><br>
-				<p>Current HEV transmission incorporates control of multiple modes (clutch engagements) to achieve high fuel 
-				economy during a drive cycle. Designing an HEV transmission configuration (a set of modes) can be intriguing since not only the
-				modes need to be determined, i.e., the connection of the engine, motors and planetary gears, but also
-				the optimal control policy needs to be derived for each	set of modes. We develop an automation framework to 
-				search for the optimal transmission configuration based on the given vehicle and drive cycle specifics. 
+				<a class="links" href="randomImages.html">randomImages</a>:
+				<br>
+				This is an webGL implementation of Karl Sims' early work, but needs more polish. 
+				It generates random tree representations of animations and burns your GPU. 
+				Refresh the page to see something new.
 				<br><br>
-				There are three core components of the project: 1) We developed a systematic way to enumerate all 
-				physically feasible transmission modes with the given engine, motors and planetary gears. 2) The vehicle model
-				is then built connecting the transmission with other vehicle components including engine, wheels, battery pack and others.
-				With a set of modes and a given drive cycle, an optimal control policy is developed to balance SOC and minimize fuel consumption.
-				3) An optimization algorithm is used to search for a near-optimal configuration based on 1) and 2).
-				</p>
-				<br><br>
+				You will probably see a few interesting things but most of them are nonsense. 
+				Question: How can we automatically generate animations that make sense?
 				
-				<a class="highlight_font">Crowdsourcing for Design Solutions (with Alex Burnap)</a><br>
-				Designs can be proposed and evaluated by a crowd.
-				But what are the game rules in crowdsourcing for a design solution?
+				<br><br>
+				<a class="links" href="topopt.html">topOpt</a>:<br>
+				This is a simple javascript implementation of Professor Sigmund's 
+				structure analysis code.<br><br> 
+				Left click your mouse to remove/add material; Ctrl+left click to 
+				assign a force; Double click to restart.
 			</div>
 		</div>
 		
