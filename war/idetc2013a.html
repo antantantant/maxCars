@@ -67,21 +67,24 @@
 
 <section class="slide" id="overview">
 	<h3>Overview</h3>
-	<section class="slide"><line>In online shopping, one may encounter overwhelming alternatives to choose from.</line></section><br>
-	<section class="slide"><line>Recommender systems: To explore similar products or products from people with similar taste.</line>
+	<section class="slide"><line>In online shopping, one may encounter many alternatives to choose from.</line></section><br>
+	<section class="slide"><line>Recommender systems: To explore similar products or products from people with similar tastes.</line>
 	</section><br>
-	<section class="slide"><line>Motivation of this paper: Develop an interaction that helps users
-	 to find their most preferred product in least effort. </line>
+	<section class="slide"><line>Goal of this paper: Develop an interaction that helps users
+	 to find their most preferred product in the least effort. </line>
 	</section><br>
-	<section class="slide"><line>Potential contribution: Candidate product designs can be evaluated efficiently through 
-	crowdsourcing and user clusters can be identified.</line>
+	<section class="slide"><line>Contribution: Designs can be evaluated efficiently through crowdsourcing.</line>
+	</section><br>
+	<section class="slide"><line>Difference from conjoint analysis: This interaction searches for the optimal design 
+	rather than partworth estimates.</line>
 	</section><br>
 </section>
 
 <section class="slide" id="problem">
 	<h3>Problem statement</h3>
-	<section class="slide"><line>Objective: An efficient query algorithm to find the most preferred product of a user from a product set.</line></section><br>
-	<section class="slide"><line>A product set contains a finite number of products, represented by a known set of features.</line>
+	<section class="slide"><line>Objective: An efficient query algorithm to find the most preferred product of a user from 
+	a product set.</line></section><br>
+	<section class="slide"><line>A product set has a finite number of products, represented by a known set of features.</line>
 	<line>E.g., a car can be represented by (1) MPG, (2) safety, (3) price, (4) style and so on.</line></section><br>
 	<section class="slide"><line>A query is a pairwise comparison question to the user: “Do you prefer design A or design B?” 
 	The response to a query is binary: A or B.</line></section><br>
@@ -94,8 +97,8 @@
 	<h3>Problem statement (cont.)</h3>
 	
 	<section class="slide"><line>Key assumptions: <br> (1) The user has consistent preference throughout the interaction, i.e., fixed partworth.</line></section><br>
-	<section class="slide"><line>(2) No error responses.</line></section><br>
-	<section class="slide"><line>(3) Product features are known and a linear utility is capable to model user preference.</line></section><br>
+	<section class="slide"><line>(2) No response errors. </line></section><br>
+	<section class="slide"><line>(3) User preference can be modeled by a linear utility with known features.</line></section><br>
 	
 	<br>
 	<section class="slide"><line>Key question: What is the best way to query so that an interaction will have the least expected number of queries?</line></section>
@@ -108,7 +111,7 @@
 		src="images/idetc2013a/demoprob1.png">
 	</block>
 	<block style="width:40%;padding-top:20%;">
-		<line>Four candidate product A, B, C and D: <br> If the user prefers A over B already, which two products will you query next?</line>
+		<line>If you know that the user prefers A over B, which two products will you query next?</line>
 	</block>
 </section>
 
@@ -126,26 +129,27 @@
 <section class="slide" id="20q1">
 	<h3>Object identification (The "Twenty Questions" game)</h3>
 	<section class="slide">
-	<line>20Q is a game between two people: Player A first thinks about a famous person in mind. 
-	Player B needs to figure out that person by asking yes/no questions, e.g., “Is the person a female?”. 
-	Player B wins if she figures out within 20 questions.</line>
+	<line>20Q is a game between two people: 
+	<br> &loz; Player A first thinks about a famous person in mind. 
+	<br> &loz; Player B needs to figure out that person by asking yes/no questions, e.g., "Is the person graduating soon?". 
+	<br> &loz; Player B wins if he/she figures out within 20 questions.</line>
 	</section><br>
 	<section class="slide">
 	<line>The query strategy of 20Q is called Generalized Binary Search (GBS).</line>
 	</section><br>
 	<section class="slide">
-	<line>Main idea of GBS: Query the most uncertain feature, i.e., pick feature 
-	$i$ such that $\text{Pr}(\text{has feature } i? | \text{all previous responses})$ closes to 0.5</line>
+	<line>Main idea of GBS: Query the most uncertain question, 
+	i.e., a query that you believe will have 50 percent of chance to be answered "yes".</line>
 	</section>
 </section>
 
 <section class="slide" id="20q2">
 	<h3>Object identification (The "Twenty Questions" game)</h3>
-	<line>Main idea of GBS: Query the most uncertain feature, i.e., pick feature 
-	$i$ such that $\text{Pr}(\text{has feature } i? | \text{all previous responses})$ close to 0.5</line>
+	<line>Main idea of GBS: Query the most uncertain question, 
+	i.e., a query that you believe will have 50 percent of chance to be answered "yes".</line>
 	<img style="width:100%;height:40%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 	src="images/idetc2013a/table1.png">
-	<line>In this example, both query 1 and query 2 can be chosen.</line>
+	<line>In this example, both feature 1 and 2 can be queried.</line>
 </section>
 
 <section class="slide" id="group1">
@@ -162,7 +166,11 @@
 	<line>The expected number of queries needed to identify a group 
 	has an analytical form and can be treated as a function of query strategy, 
 	i.e., a tree structure that tells which query to make under what previous 
-	responses. (**Scott)</line>
+	responses. 
+	<br>
+	<citation>(G. Bellala, S. Bhavnani and C. Scott, Group-based active
+	query selection for rapid diagnosis in time-critical
+	situations, 2012)</citation></line>
 	</section>
 </section>
 
@@ -195,26 +203,30 @@
 
 <section class="slide" id="ggbs2">
 	<h3>Group generalized binary search (cont.)</h3>
+	
+	<line>This query strategy leads to an efficiency measure of queries.<br>
+	The query with the most efficiency will be picked in each iteration.</line>
+	<br>
+	<br>
 	<section class="slide">
-	<line>Main idea of GGBS: To minimize the expected number of queries, we need to query the feature that (1) is the most uncertain and 
-	(2) the response to which will not separate objects from the same group.</line><br><br>
-		<line>This query strategy requires calculation of 
+		<line>The measure requires calculation of</line>
 			<div id="equation">
 			\[
-				\text{Pr}(\text{The answer to query } j \text{ is 'yes'}| \text{all previous responses}),
+				\text{Pr}(\text{The answer to query } j \text{ is "yes"}| \text{all previous responses}),
 			\]</div>
 			and
 			<div id="equation">
 			\[
-				\text{Pr}(\text{Group } i \text{ is the correct group}| \text{all previous responses and the answer to query } j \text{ is 'yes'}).
+				\text{Pr}(\text{Group } i \text{ is the correct group}| \\
+				\text{all previous responses and the answer to query } j \text{ is "yes"}).
 			\]</div>
 			Both are based on the calculation of
 			<div id="equation">
 			\[
-				\text{Pr}(\text{Group } i  \text{ is the correct group} | \text{all previous responses})
+				\text{Pr}(\text{Group } i  \text{ is the correct group} | \text{all previous responses}).
 			\]</div>
 		</line>
-	</section><br>
+	</section>
 </section>
 
 <section class="slide" id="identical">
@@ -236,11 +248,11 @@
 		src="images/idetc2013a/fig1.png">
 	</block>
 	<block style="width:50%;">
-	<line>Calculating $\pi_{\Theta^i}$ is time consuming.</line><br><br>
+	<line>Calculating $\pi_{\Theta^i_a}$ is time consuming.</line><br><br>
 	<line>On the figure, the <b>green</b>, <b>blue</b> and <b>red</b> shaded areas represent 
-	$\pi_{\Theta^A}$, $\pi_{\Theta^B}$ and $\pi_{\Theta^C}$ respectively.</line><br><br>
-	<line>The depth of each shaded area depends on the distribution of the partworth vector ${\bf w}$</line><br>
-	<line>Without any knowledge, we can initialize its distribution so that $\pi_{\Theta^A}=\pi_{\Theta^B}=\pi_{\Theta^C}$.
+	$\pi_{\Theta^A}$, $\pi_{\Theta^B}$ and $\pi_{\Theta^C}$, respectively.</line><br><br>
+	<line>Without any knowledge, we can initialize its distribution so that $\pi_{\Theta^A}=\pi_{\Theta^B}=\pi_{\Theta^C}$.</line><br><br>
+	<line>We also assume that ${\bf w}$ is piece-wise uniformly distributed over the circle.</line>
 	</block>
 </section>
 
@@ -251,23 +263,36 @@
 		src="images/idetc2013a/fig2.png">
 	</block>
 	<block style="width:50%;">
-		<line>For the given distribution of ${\bf w}$ (uniform across each group), $\pi_{\Theta^i}$ requires 
-		calculation of arc lengths, or surface areas of a hypersphere in general.</line><br><br>
-		<line>At each iteration, the surface area calculation routine will be 
-		called <br>($\text{num. product} \times \text{num. candidate query}$) times.</line>
+		<line>For the given distribution of ${\bf w}$, $\pi_{\Theta^i_a}$ requires 
+		the calculation of arc lengths, or surface areas of a hypersphere in general.</line><br></br>
+		<line>At each iteration, all arcs will be calculated for each candidate query.</line><br></br>
+		<line>E.g., to evaluate the efficiency of a query with A and C, we need to calculate 
+		<div id="equation">
+			\[
+				\text{Pr}(A \text{ is the best}| A \text{ better than } C),
+			\]</div>
+		<div id="equation">
+			\[
+				\text{Pr}(B \text{ is the best}| A \text{ better than } C),
+			\]</div>
+		<div id="equation">
+			\[
+				\text{Pr}(C \text{ is the best}| A \text{ better than } C) \text{ (trivial)}.
+			\]</div>
+		</line>
 	</block>
 </section>
 
 <section class="slide" id="approximation1">
-	<h3>A fast approximation</h3>
+	<h3>A fast approximation using linear SVM</h3>
 	<block style="width:50%;">
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 	src="images/idetc2013a/fig3.png">
 	</block>
 	<block style="width:50%;">
 		<line>Approximating $\pi_{\Theta^A}$:</line><br><br>
-		<line>(1) Fit a circle such that its center lies on the green arc and it tangents with one of the boundaries</line><br><br>
-		<line>(2) Calculate the radius of the circle $R_A$. The approximated area is then $R_A^{(D-1)}$</line><br><br>
+		<line>(1) Fit a circle such that its center lies on the green arc and it tangents with one of the boundaries.</line><br><br>
+		<line>(2) Calculate the radius of the circle $R_A$. The approximated area is then $R_A^{(D-1)}$.</line><br><br>
 		<line>(3) Let the depth of the green arc (density of ${\bf w}$ for product A) be $p_A$, we have 
 		<div id="equation">
 		\[
@@ -329,7 +354,7 @@
 	</block>
 	<block style="width:40%;padding-left:5%;padding-top:10%;">
 		<line>With 15 product features and 160 candidate products, the average response time is less than 1 second.</line><br><br>
-		<line>An application has been launched at: ***, with both appGGBS and EGO algorithms.</line><br><br>
+<!-- 		<line>An application has been launched at: ***, with both appGGBS and EGO algorithms.</line><br><br> -->
 	</block>
 </section>
 
@@ -392,31 +417,34 @@
 
 <section class="slide" id="future">
 	<h3>Future works</h3>
+	<section class="slide">
 	<line>A collaborative filter can be incorporated with the 
-	GGBS algorithm to provide better estimation of conditional probabilities $\pi_{\Theta^i}$.</line><br><br>
-	<line>An existing GGBS algorithm that handles responses with 
-	error will be incorporated to improve the robustness of the algorithm.</line><br><br>
-	<line>Multiple choice instead of pairwise comparison will be considered.</line><br><br>
+	GGBS algorithm to provide better estimation of prior probabilities $\pi_{\Theta^i}$.</line></section><br>
+	<section class="slide">
+	<line>An existing GGBS algorithm that handles response error 
+	will be incorporated to improve the robustness of the algorithm.</line></section><br>
+	<section class="slide">
+	<line>Multiple choice instead of pairwise comparison will be considered.</line></section>
 </section>
 
 <section class="slide">
 	<line style="position:absolute;left:0;right:0;text-align:center;font-size:80%;top:90%;">
 	presentation available at http://maxyiren.appspot.com/idetc2013a.html</line>
 	<titleline>Thank you all for attending.<br>What questions do you have?</titleline>
-	<div style="position:absolute;top:60%;padding-left:5%;">
+	<div style="position:absolute;top:60%;padding-left:3%;width:100%;">
 		<div style="float:left;width:10%;">
 			<img style="width:100px;height:150px;margin:0;padding:0;display:inline;" src="images/idetc2012c/yiren2012jul.png"></td>
 		</div>
-		<div style="float:left;width:20%;padding-right:3%;">
+		<div style="float:left;width:20%;padding-right:2%;">
 			<p style="font-size:80%;margin-left:0%;">Research Fellow<br>
 			Optimal Design Lab<br>University of Michigan<br>
 			yiren@umich.edu<br>maxyiren.appspot.com</p></td>
 		</div>
 		
 		<div style="float:left;width:10%;">
-			<img style="width:110px;height:150px;margin:0;padding:0;display:inline;" src="images/idetc2013a/clayscott.jpg"></td>
+			<img style="width:110px;height:150px;margin:0;padding:0;display:inline;" src="images/idetc2013a/gray_clay-1.jpg"></td>
 		</div>
-		<div style="float:left;width:20%;padding-right:3%;">
+		<div style="float:left;width:20%;padding-right:2%;">
 			<p style="font-size:80%;margin-left:0%;">Associate Professor<br>
 			Electrical Engineering and Computer Science<br>University of Michigan
 			<br>clayscot@umich.edu<br>web.eecs.umich.edu/~cscott/</p>
