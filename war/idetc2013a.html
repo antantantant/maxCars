@@ -71,18 +71,18 @@
 	<section class="slide"><line>Recommender systems: To explore similar products or products from people with similar tastes.</line>
 	</section><br>
 	<section class="slide"><line>Goal of this paper: Develop an interaction that helps users
-	 to find their most preferred product in the least effort. </line>
+	 to find their most preferred product in the least effort (fewest queries).</line>
 	</section><br>
-	<section class="slide"><line>Contribution: Designs can be evaluated efficiently through crowdsourcing.</line>
+	<section class="slide"><line>Contribution: To help efficient evaluation of a large number of design alternatives using the crowd.</line>
 	</section><br>
-	<section class="slide"><line>Difference from conjoint analysis: This interaction searches for the optimal design 
+	<section class="slide"><line>Difference from conjoint analysis: The proposed interaction searches for the optimal design 
 	rather than partworth estimates.</line>
 	</section><br>
 </section>
 
 <section class="slide" id="problem">
 	<h3>Problem statement</h3>
-	<section class="slide"><line>Objective: An efficient query algorithm to find the most preferred product of a user from 
+	<section class="slide"><line>Objective: To find an efficient query algorithm that elicits the most preferred product of a user from 
 	a product set.</line></section><br>
 	<section class="slide"><line>A product set has a finite number of products, represented by a known set of features.</line>
 	<line>E.g., a car can be represented by (1) MPG, (2) safety, (3) price, (4) style and so on.</line></section><br>
@@ -130,7 +130,7 @@
 	<h3>Object identification (The "Twenty Questions" game)</h3>
 	<section class="slide">
 	<line>20Q is a game between two people: 
-	<br> &loz; Player A first thinks about a famous person in mind. 
+	<br> &loz; Player A first thinks about a person that both players know. 
 	<br> &loz; Player B needs to figure out that person by asking yes/no questions, e.g., "Is the person graduating soon?". 
 	<br> &loz; Player B wins if he/she figures out within 20 questions.</line>
 	</section><br>
@@ -139,14 +139,14 @@
 	</section><br>
 	<section class="slide">
 	<line>Main idea of GBS: Query the most uncertain question, 
-	i.e., a query that you believe will have 50 percent of chance to be answered "yes".</line>
+	i.e., a query that you believe will have 50 percent of chance to be answered "yes" or "no".</line>
 	</section>
 </section>
 
 <section class="slide" id="20q2">
-	<h3>Object identification (The "Twenty Questions" game)</h3>
+	<h3>Object identification (cont.)</h3>
 	<line>Main idea of GBS: Query the most uncertain question, 
-	i.e., a query that you believe will have 50 percent of chance to be answered "yes".</line>
+	i.e., a query that you believe will have 50 percent of chance to be answered "yes" or "no".</line>
 	<img style="width:100%;height:40%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 	src="images/idetc2013a/table1.png">
 	<line>In this example, both feature 1 and 2 can be queried.</line>
@@ -161,48 +161,20 @@
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 	src="images/idetc2013a/table2.png">
 	</section><br>
-
-	<section class="slide">
-	<line>The expected number of queries needed to identify a group 
-	has an analytical form and can be treated as a function of query strategy, 
-	i.e., a tree structure that tells which query to make under what previous 
-	responses. 
-	<br>
-	<citation>(G. Bellala, S. Bhavnani and C. Scott, Group-based active
-	query selection for rapid diagnosis in time-critical
-	situations, 2012)</citation></line>
-	</section>
-</section>
-
-<section class="slide" id="group2">
-	<h3>Group identification (cont.)</h3>
-	<block style="width:50%;">
-		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
-		src="images/idetc2013a/tree.png">
-	</block>
-	<block style="width:50%;padding-top:10%;">
-		<line>The expected number of queries for group identification is an function of:</line><br><br>
-		<line>(1) The query strategy, i.e., a tree structure that tells which query to make under 
-		what previous responses</line><br><br>
-		<line>(2) The prior distribution of the groups</line>
-	</block>
-</section>
-
-<section class="slide" id="ggbs1">
-	<h3>Group generalized binary search</h3>
-	<section class="slide">
-	<line>Main idea of GGBS: To minimize the expected number of queries, we need to query the feature that (1) is the most uncertain and 
-	(2) the response to which will not separate objects from the same group.</line>
-		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
-		src="images/idetc2013a/table2.png">
-	</section><br>
 	<section class="slide">
 	<line>In this case, feature 1 should be queried.</line>
+	</section><br>
+	<section class="slide">
+	<line>Group Generalized Binary Search (GGBS): To minimize the expected number of queries, we need to query the feature that (1) is the most uncertain and 
+	(2) the response to which will not separate objects from the same group.</line><br>
+			<citation>(G. Bellala, S. Bhavnani and C. Scott, Group-based active
+		query selection for rapid diagnosis in time-critical
+		situations, 2012)</citation>
 	</section><br>
 </section>
 
 <section class="slide" id="ggbs2">
-	<h3>Group generalized binary search (cont.)</h3>
+	<h3>Group generalized binary search</h3>
 	
 	<line>This query strategy leads to an efficiency measure of queries.<br>
 	The query with the most efficiency will be picked in each iteration.</line>
@@ -236,33 +208,34 @@
 	<section class="slide">
 	<line>The key step in the solution is the calculation of </line> 
 	<div id="equation">
-	\[\pi_{\Theta^i}:= \text{Pr}(\text{Product } i \text{ is the most preferred} | \text{all previous responses}).\]
+	\[\pi_{\Theta^i_a}:= \text{Pr}(\text{Product } i \text{ is the most preferred} | \text{all previous responses up to iteration "a"}).\]
 	</div>
 	</section><br>
 </section>
 
 <section class="slide" id="difficulty1">
-	<h3>Implementation difficulty</h3>
+	<h3>Implementation</h3>
 	<block style="width:50%;">
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 		src="images/idetc2013a/fig1.png">
 	</block>
 	<block style="width:50%;">
-	<line>Calculating $\pi_{\Theta^i_a}$ is time consuming.</line><br><br>
 	<line>On the figure, the <b>green</b>, <b>blue</b> and <b>red</b> shaded areas represent 
 	$\pi_{\Theta^A}$, $\pi_{\Theta^B}$ and $\pi_{\Theta^C}$, respectively.</line><br><br>
-	<line>Without any knowledge, we can initialize its distribution so that $\pi_{\Theta^A}=\pi_{\Theta^B}=\pi_{\Theta^C}$.</line><br><br>
-	<line>We also assume that ${\bf w}$ is piece-wise uniformly distributed over the circle.</line>
+	<line>Without any knowledge, we can initialize its distribution so that $\pi_{\Theta^A}=\pi_{\Theta^B}=\pi_{\Theta^C}=1/3$.</line><br><br>
+	<line>We also assume that ${\bf w}$ is piece-wise uniformly distributed over the circle.</line><br><br>
+	<line>The distribution of ${\bf w}$ can be determined by $\pi_{\Theta^A}$, $\pi_{\Theta^B}$, $\pi_{\Theta^C}$ and the arc lengths.</line>
 	</block>
 </section>
 
 <section class="slide">
-	<h3>Implementation difficulty</h3>
+	<h3>Implementation(cont.)</h3>
 	<block style="width:50%;">
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 		src="images/idetc2013a/fig2.png">
 	</block>
 	<block style="width:50%;">
+		<line>Calculating $\pi_{\Theta^i_a}$ is time consuming.</line><br><br>
 		<line>For the given distribution of ${\bf w}$, $\pi_{\Theta^i_a}$ requires 
 		the calculation of arc lengths, or surface areas of a hypersphere in general.</line><br></br>
 		<line>At each iteration, all arcs will be calculated for each candidate query.</line><br></br>
@@ -302,7 +275,7 @@
 </section>
 
 <section class="slide" id="approximation2">
-	<h3>A fast approximation (cont.)</h3>
+	<h3>A fast approximation using linear SVM (cont.)</h3>
 	<block style="width:50%;">
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 		src="images/idetc2013a/fig3.png">
@@ -320,7 +293,7 @@
 	<line>Algorithm implementation: appGGBS</line><br><br>
 	<line> &loz; Find the four products with the highest conditional probabilities to be the most preferred (6 candidate queries in total)</line><br><br>
 	<line> &loz; Pick a pair from the four designs using GGBS</line><br><br>
-	<line> &loz; After getting user response, update $\pi_{\Theta^i}$ for all candidate products</line><br><br>
+	<line> &loz; After getting user response, calculate $\pi_{\Theta^i_a}$ for all candidate products</line><br><br>
 	<line> &loz; Terminate when one product has probability 1 to be the most preferred</line><br><br>
 </section>
 
@@ -328,7 +301,7 @@
 	<h3>Simulation study (cont.)</h3>
 	<line>Algorithm to compare with: EGO</line><br><br>
 	<line> &loz; The first query contains the two products with highest prior probabilities to be the most preferred</line><br><br>
-	<line> &loz; After getting user response, update the partworth vector ${\bf w}$ and $\pi_{\Theta^i}$</line><br><br>
+	<line> &loz; After getting user response, update the partworth vector ${\bf w}$ and calculate $\pi_{\Theta^i_a}$</line><br><br>
 	<line> &loz; Each following query contains (i) the previously preferred product and (ii) the product 
 	with highest predicted utility that hasn’t been queried yet</line><br><br>
 	<line> &loz; Terminate when one product has probability 1 to be the most preferred</line><br><br>
@@ -337,12 +310,13 @@
 <section class="slide" id="simresult">
 	<h3>Simulation results: Performance</h3>
 	<block style="width:50%;">
-		<img style="width:90%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		<img style="width:100%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 		src="images/idetc2013a/simperf.png">
 	</block>
-	<block style="width:50%;padding-top:10%;">
-		<line>appGGBS has overall better performance. Its superiority increases with $\text{num. product}$ and decreases with $\text{num. feature}$.</line><br><br>
-		<line>EGO can outperform appGGBS under high $\text{num. feature}$ and low $\text{num. product}$.</line><br><br>
+	<block style="width:40%;padding-left:5%;padding-top:10%;">
+		<line>appGGBS has overall better performance. Its superiority increases with <u>num. product</u> 
+		and decreases with <u>num. feature</u>.</line><br><br>
+		<line>EGO can outperform appGGBS under high <u>num. feature</u> and low <u>num. product</u>.</line><br><br>
 	</block>
 </section>
 
@@ -428,8 +402,11 @@
 </section>
 
 <section class="slide">
-	<line style="position:absolute;left:0;right:0;text-align:center;font-size:80%;top:90%;">
+	<line style="position:absolute;left:0;right:0;text-align:center;font-size:80%;top:85%;">
 	presentation available at http://maxyiren.appspot.com/idetc2013a.html</line>
+	<line style="position:absolute;left:0;right:0;text-align:center;font-size:80%;top:90%;">
+	This project is partially supported by the Automotive Research Center at the University of Michigan. This support is gratefully acknowledged.</line>
+	
 	<titleline>Thank you all for attending.<br>What questions do you have?</titleline>
 	<div style="position:absolute;top:60%;padding-left:3%;width:100%;">
 		<div style="float:left;width:10%;">
@@ -459,6 +436,21 @@
 			pyp@umich.edu<br>ode.engin.umich.edu</p>
 		</div>
 	</div>
+	<br><br>
+</section>
+
+<section class="slide" id="group2">
+	<h3>Group identification (cont.)</h3>
+	<block style="width:50%;">
+		<img style="width:90%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		src="images/idetc2013a/tree.png">
+	</block>
+	<block style="width:50%;padding-top:10%;">
+		<line>The expected number of queries for group identification is an function of:</line><br><br>
+		<line>(1) The query strategy, i.e., a tree structure that tells which query to make under 
+		what previous responses</line><br><br>
+		<line>(2) The prior distribution of the groups</line><br>
+	</block>
 </section>
 <!-- End slides. -->
 
