@@ -31,8 +31,11 @@
 	<link href="css/font.css" rel="stylesheet" type="text/css" />
 	
 	<!-- 	Include Mathjax -->
-	<script type="text/javascript"
-	  src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+<!-- 	<script type="text/javascript" -->
+<!-- 	  src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> -->
+<!-- 	</script> -->
+	<script type="text/javascript" -->
+		src="scripts/mathjax/MathJax.js"
 	</script>
 	<script type="text/x-mathjax-config">
 	  MathJax.Hub.Config({
@@ -66,6 +69,7 @@
 </section>
 
 <section class="slide" id="overview">
+<br>
 	<h3>Overview</h3>
 	<section class="slide"><line>In online shopping, one may encounter many alternatives to choose from.</line></section><br>
 	<section class="slide"><line>Recommender systems: To explore similar products or products from people with similar tastes.</line>
@@ -81,10 +85,11 @@
 </section>
 
 <section class="slide" id="problem">
+<br>
 	<h3>Problem statement</h3>
 	<section class="slide"><line>Objective: To find an efficient query algorithm that elicits the most preferred product of a user from 
 	a product set.</line></section><br>
-	<section class="slide"><line>A product set has a finite number of products, represented by a known set of features.</line>
+	<section class="slide"><line>A product set has a finite number of products, represented by a set of known features.</line>
 	<line>E.g., a car can be represented by (1) MPG, (2) safety, (3) price, (4) style and so on.</line></section><br>
 	<section class="slide"><line>A query is a pairwise comparison question to the user: “Do you prefer design A or design B?” 
 	The response to a query is binary: A or B.</line></section><br>
@@ -94,17 +99,18 @@
 </section>
 
 <section class="slide" id="assumption">
+<br>
 	<h3>Problem statement (cont.)</h3>
-	
-	<section class="slide"><line>Key assumptions: <br> (1) The user has consistent preference throughout the interaction, i.e., fixed partworth.</line></section><br>
-	<section class="slide"><line>(2) No response errors. </line></section><br>
-	<section class="slide"><line>(3) User preference can be modeled by a linear utility with known features.</line></section><br>
+	<section class="slide"><line>Key assumptions: <br> (1) User preference can be modeled by a linear utility with known features.</line></section><br>
+	<section class="slide"><line>(2) The user has consistent preference throughout the interaction, i.e., fixed partworth.</line></section><br>
+	<section class="slide"><line>(3) No response errors. </line></section><br>
 	
 	<br>
 	<section class="slide"><line>Key question: What is the best way to query so that an interaction will have the least expected number of queries?</line></section>
 </section>
 
 <section class="slide" id="demo1">
+<br>
 	<h3>Demonstration of the problem</h3>
 	<block style="width:50%;">
 		<img style="width:100%;height:40%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
@@ -116,6 +122,7 @@
 </section>
 
 <section class="slide" id="demo2">
+<br>
 	<h3>Demonstration of the problem (cont.)</h3>
 	<block style="width:50%;">
 		<img style="width:100%;height:40%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
@@ -127,6 +134,7 @@
 </section>
 
 <section class="slide" id="20q1">
+<br>
 	<h3>Object identification (The "Twenty Questions" game)</h3>
 	<section class="slide">
 	<line>20Q is a game between two people: 
@@ -144,6 +152,7 @@
 </section>
 
 <section class="slide" id="20q2">
+<br>
 	<h3>Object identification (cont.)</h3>
 	<line>Main idea of GBS: Query the most uncertain question, 
 	i.e., a query that you believe will have 50 percent of chance to be answered "yes" or "no".</line>
@@ -153,6 +162,7 @@
 </section>
 
 <section class="slide" id="group1">
+<br>
 	<h3>Group identification</h3>
 	<section class="slide">
 	<line>Group identification problem: In 20Q, 
@@ -174,6 +184,7 @@
 </section>
 
 <section class="slide" id="ggbs2">
+<br>
 	<h3>Group generalized binary search</h3>
 	
 	<line>This query strategy leads to an efficiency measure of queries.<br>
@@ -192,7 +203,7 @@
 				\text{Pr}(\text{Group } i \text{ is the correct group}| \\
 				\text{all previous responses and the answer to query } j \text{ is "yes"}).
 			\]</div>
-			Both are based on the calculation of
+			<line>Both are based on the calculation of</line>
 			<div id="equation">
 			\[
 				\text{Pr}(\text{Group } i  \text{ is the correct group} | \text{all previous responses}).
@@ -202,18 +213,21 @@
 </section>
 
 <section class="slide" id="identical">
+<br>
 	<h3>Our problem is identical to group identification</h3>
 	<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 	src="images/idetc2013a/table3.png">
 	<section class="slide">
 	<line>The key step in the solution is the calculation of </line> 
 	<div id="equation">
-	\[\pi_{\Theta^i_a}:= \text{Pr}(\text{Product } i \text{ is the most preferred} | \text{all previous responses up to iteration "a"}).\]
+	\[\pi_{\Theta^i_a}:= \text{Pr}(\text{Product } i \text{ is the most preferred} \\
+	| \text{all previous responses up to iteration "a"}).\]
 	</div>
 	</section><br>
 </section>
 
 <section class="slide" id="difficulty1">
+<br>
 	<h3>Implementation</h3>
 	<block style="width:50%;">
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
@@ -229,13 +243,14 @@
 </section>
 
 <section class="slide">
+<br>
 	<h3>Implementation(cont.)</h3>
 	<block style="width:50%;">
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 		src="images/idetc2013a/fig2.png">
 	</block>
 	<block style="width:50%;">
-		<line>Calculating $\pi_{\Theta^i_a}$ is time consuming.</line><br><br>
+		<line>Calculating conditional probabilities is time consuming.</line><br><br>
 		<line>For the given distribution of ${\bf w}$, $\pi_{\Theta^i_a}$ requires 
 		the calculation of arc lengths, or surface areas of a hypersphere in general.</line><br></br>
 		<line>At each iteration, all arcs will be calculated for each candidate query.</line><br></br>
@@ -257,6 +272,7 @@
 </section>
 
 <section class="slide" id="approximation1">
+<br>
 	<h3>A fast approximation using linear SVM</h3>
 	<block style="width:50%;">
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
@@ -275,6 +291,7 @@
 </section>
 
 <section class="slide" id="approximation2">
+<br>
 	<h3>A fast approximation using linear SVM (cont.)</h3>
 	<block style="width:50%;">
 		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
@@ -289,6 +306,7 @@
 </section>
 
 <section class="slide" id="appggbs">
+<br>
 	<h3>Simulation study</h3>
 	<line>Algorithm implementation: appGGBS</line><br><br>
 	<line> &loz; Find the four products with the highest conditional probabilities to be the most preferred (6 candidate queries in total)</line><br><br>
@@ -298,6 +316,7 @@
 </section>
 
 <section class="slide" id="ego">
+<br>
 	<h3>Simulation study (cont.)</h3>
 	<line>Algorithm to compare with: EGO</line><br><br>
 	<line> &loz; The first query contains the two products with highest prior probabilities to be the most preferred</line><br><br>
@@ -308,6 +327,7 @@
 </section>
 
 <section class="slide" id="simresult">
+<br>
 	<h3>Simulation results: Performance</h3>
 	<block style="width:50%;">
 		<img style="width:100%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
@@ -321,6 +341,7 @@
 </section>
 
 <section class="slide" id="simcomp">
+<br>
 	<h3>Simulation results: Computation</h3>
 	<block style="width:50%;">
 		<img style="width:100%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
@@ -333,6 +354,7 @@
 </section>
 
 <section class="slide" id="user">
+<br>
 	<h3>User test</h3>
 	<section class="slide">
 		<block style="width:50%;">
@@ -357,9 +379,10 @@
 </section>
 
 <section class="slide" id="userresult">
+<br>
 	<h3>User test results</h3>
 	<block style="width:50%;">
-		<img style="width:80%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
+		<img style="width:70%;height:50%;padding-left:20%;margin-bottom:0;padding:0;display:inline;max-width:none;"
 		src="images/idetc2013a/result.png">
 	</block>
 	<block style="width:50%;padding-top:5%;">
@@ -373,15 +396,16 @@
 </section>
 
 <section class="slide" id="conclusion">
+<br>
 	<h3>Conclusions</h3>
 	<section class="slide">
-		<line>An active query algorithm can potentially enhance 
-		online shopping experience by quickly learning the preferred product 
+		<line>An active query algorithm can enhance 
+		online shopping and design evaluation experiences by quickly learning the preferred product 
 		of a user from a large amount of products.</line>
 	</section><br>
 	<section class="slide">
-		<line>We proposed an computationally efficient algorithm with strong theoretical 
-		support, and validated its performance using real people.</line>
+		<line>We proposed a computationally efficient algorithm with strong theoretical 
+		support, and tested its performance using real people.</line>
 	</section><br>
 	<section class="slide">
 		<line>The algorithm is shown to be superior than a previously 
@@ -390,15 +414,15 @@
 </section>
 
 <section class="slide" id="future">
+<br>
 	<h3>Future works</h3>
 	<section class="slide">
 	<line>A collaborative filter can be incorporated with the 
-	GGBS algorithm to provide better estimation of prior probabilities $\pi_{\Theta^i}$.</line></section><br>
+	appGGBS algorithm to provide better estimation of prior probabilities $\pi_{\Theta^i}$.</line></section><br>
 	<section class="slide">
-	<line>An existing GGBS algorithm that handles response error 
-	will be incorporated to improve the robustness of the algorithm.</line></section><br>
+	<line>Response error needs to be handled.</line></section><br>
 	<section class="slide">
-	<line>Multiple choice instead of pairwise comparison will be considered.</line></section>
+	<line>Multiple choice instead of pairwise comparison will be implemented.</line></section>
 </section>
 
 <section class="slide">
@@ -481,7 +505,7 @@
 
 <!-- Grab CDN jQuery, with a protocol relative URL; fall back to local if offline -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="resource/deck/jquery-1.7.2.min.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="resource/slides/deck/jquery-1.7.2.min.js"><\/script>')</script>
 
 <!-- Required JS files. -->
 <script src="resource/slides/deck/core/deck.core.js"></script>
