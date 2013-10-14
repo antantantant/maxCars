@@ -1,4 +1,4 @@
-function carModel(Input, order, step, wheel_n, wheel_step, tire_step){
+function carModel(Input, order, step, wheel_n, wheel_step, tire_step, material){
     // parameters for bezier surface
     var CC; //order_coef
     var BC; //berstein_polys
@@ -733,8 +733,8 @@ function carModel(Input, order, step, wheel_n, wheel_step, tire_step){
     // 32
     ctrlpt.push(back_pt12, back_pt5, rear_pt, back_pt13, back_pt6, rw_mid1, back_pt14, back_pt7, rw1);
     
-    vertexPositionData = draw_bezier_surf(ctrlpt, step, order, BC);
-    
+//    vertexPositionData = draw_bezier_surf(ctrlpt, step, order, BC);
+   
     checkNaN([hood_end_pt,hood_u_mid_pt,hood_u_pt,fw_ctrl_pt,fw_center,fw_v_hash_pt,roof_start_pt,fw_u_mid_pt,fw_u_pt
     		,roof_ctrl_pt,rf_center,roof_v_hash_pt,roof_end_pt,rf_u_mid_pt,roof_pt,bw_ctrl_pt,bw_center,bw_v_mid_pt
     		,bw_end_pt,bw_u_mid_pt,bw_pt,hip_ctrl_pt,hip_center,hip_v_mid_pt,hip_mid_pt,rear_u1_mid_pt,rear_start_pt
@@ -753,7 +753,39 @@ function carModel(Input, order, step, wheel_n, wheel_step, tire_step){
     		,side_pt9,side_pt18,back_pt8,back_pt1,back_pt9,back_pt2,back_pt10,back_pt3,back_pt11
     		,back_pt4,back_pt12,back_pt5,back_pt13,back_pt6,back_pt14,back_pt7]);
     
+    var degree = 2;
+    var knots = [0,0,0,1,1,1];
+    var carSurfaces = new THREE.Object3D();
+    for(var nsControlPoints = [];nsControlPoints.length < 3; nsControlPoints.push(new Array(3)));
+    
+    for (var i=0;i<32;i++){
+    	for (var j=0;j<3;j++){
+    		for (var k=0;k<3;k++){
+    			nsControlPoints[j][k] = 
+    				new THREE.Vector4(ctrlpt[i*9+j*3+k][0],ctrlpt[i*9+j*3+k][1],ctrlpt[i*9+j*3+k][2]);
+    		}
+    	}
+    	var nurbsSurface = new THREE.NURBSSurface(degree,degree,knots,knots,nsControlPoints);
+    	getSurfacePoint = function(u, v) {
+			return nurbsSurface.getPoint(u, v);
+		};
+    	var geometry = new THREE.ParametricGeometry(getSurfacePoint, 20, 20);
+    	var object = new THREE.Mesh( geometry, material );
+    	object.geometry.dynamic = true
+    	object.geometry.__dirtyVertices = true;
+    	object.geometry.__dirtyNormals = true;
 
+    	object.flipSided = true;
+    	object.doubleSided = true;
+    	for(var j = 0; j<object.geometry.faces.length; j++) {
+    		object.geometry.faces[j].normal.x = -1*object.geometry.faces[j].normal.x;
+    		object.geometry.faces[j].normal.y = -1*object.geometry.faces[j].normal.y;
+    		object.geometry.faces[j].normal.z = -1*object.geometry.faces[j].normal.z;
+    	}
+    	carSurfaces.add(object);
+    }
+    
+    
 	///////////////////////////////////////////////////////////////////////////////////////////////
     // Add wheels
 	var wheel_pts = [];
@@ -879,5 +911,5 @@ function carModel(Input, order, step, wheel_n, wheel_step, tire_step){
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-    return [vertexPositionData, wheel_pts, tire_pts];
+    return [carSurfaces, wheel_pts, tire_pts];
 }

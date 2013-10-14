@@ -34,20 +34,12 @@ function create(){
         this.X_[i] = this.X[i].slice(0);
     }
 	
-	create_scene = new webgl_scene('createframe',$('#createframe').width(),$('#createframe').height(),0,0,this.X,2);
-	create_scene.camera.rotation.x=0;
-	create_scene.camera.position.x=1;
-	create_scene.camera.position.y=-0.4;
-	create_scene.camera.position.z=11.5;
-	create_scene.renderer.clear();
-	create_scene.renderer.render(create_scene.scene,create_scene.camera);
+	create_scene = new webgl_scene('createframe',$('#createframe').width(),$('#createframe').height(),0,0,this.X[0],2);
+	animate();
 }
 
 create.prototype.update = function(){
-//	this.updateTarget(L);
-	create_scene.update(this.X[0],0);
-	create_scene.renderer.clear();
-	create_scene.renderer.render(create_scene.scene,create_scene.camera);
+	create_scene.update(this.X[0]);
 };
 
 create.prototype.store = function(){
@@ -569,6 +561,13 @@ function getRequestObject() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
+var targetRotation = 0;
+var targetRotationOnMouseDown = 0;
+var mouseX = 0;
+var mouseXOnMouseDown = 0;
+var windowHalfX = window.innerWidth / 2;
+var windowHalfY = window.innerHeight / 2;
+
 function search_animate(){
 //	requestAnimationFrame(search_animate);
 	search_render();
@@ -597,4 +596,13 @@ function demo_render(){
 	demo_scene.camera.position.y=p.y+1.0*r*Math.sin(demo_scene.camera.rotation.z);
 	demo_scene.renderer.clear();
 	demo_scene.renderer.render(demo_scene.scene,demo_scene.camera);
+}
+
+function animate() {
+	requestAnimationFrame( animate );
+	render();
+}
+function render() {
+	carModel.rotation.z += ( targetRotation - carModel.rotation.z ) * 0.05;
+	create_scene.renderer.render( car, create_scene.camera );
 }
