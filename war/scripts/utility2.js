@@ -10,7 +10,7 @@ function demo(n){
             this.X[i].push(Math.random());
         }
     }
-	demo_scene = new webgl_scene('modelframe',$('#staticframe').width(),$('#staticframe').height(),0,0,this.X,0);
+	demo_scene = new webgl_scene('modelframe',$('#staticframe').width(),$('#staticframe').height(),0,0,this.X[0],0);
 	demo_animate();
 }
 
@@ -585,17 +585,16 @@ function search_render(){
 function demo_animate(){
 	requestAnimationFrame(demo_animate);
 	demo_render();
-	demo_scene.stats.update();
 }
 function demo_render(){
 	var r = 10;
-	var p = demo_scene.carModel[0].position;
+	var p = carModel.position;
 	var s = [Math.sin(new Date()/10000)*-0.0001,0,Math.sin(new Date()/10000)*-0.0001];
 	demo_scene.camera.rotation.z+=s[2];
 	demo_scene.camera.position.x=p.x+1.0*r*Math.sin(demo_scene.camera.rotation.z)+7;
 	demo_scene.camera.position.y=p.y+1.0*r*Math.sin(demo_scene.camera.rotation.z);
 	demo_scene.renderer.clear();
-	demo_scene.renderer.render(demo_scene.scene,demo_scene.camera);
+	demo_scene.renderer.render(car,demo_scene.camera);
 }
 
 function animate() {
