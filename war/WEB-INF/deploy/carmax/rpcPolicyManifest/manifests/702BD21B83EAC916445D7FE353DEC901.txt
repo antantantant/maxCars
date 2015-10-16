@@ -1,0 +1,2 @@
+serviceClass: com.carMax.client.GreetingService
+path: 497A817E0118B5547E3699A1DBB8978B.gwt.rpc

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+  <!-- Servlets -->
+	<servlet>
+		<servlet-name>Search</servlet-name>
+		<servlet-class>search.SearchServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Store</servlet-name>
+		<servlet-class>dao.StoreServlet</servlet-class>
+	</servlet>
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>Read</servlet-name> -->
+<!-- 		<servlet-class>dao.ReadServlet</servlet-class> -->
+<!-- 	</servlet> -->
+	<servlet>
+		<servlet-name>SVM</servlet-name>
+		<servlet-class>search.SVMServlet</servlet-class>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>Search</servlet-name>
+		<url-pattern>/search</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Store</servlet-name>
+		<url-pattern>/store</url-pattern>
+	</servlet-mapping>
+	
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>Read</servlet-name> -->
+<!-- 		<url-pattern>/read</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+	<servlet-mapping>
+		<servlet-name>SVM</servlet-name>
+		<url-pattern>/svm</url-pattern>
+	</servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <servlet>
+    <servlet-name>SystemServiceServlet</servlet-name>
+    <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+    <init-param>
+      <param-name>services</param-name>
+      <param-value/>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SystemServiceServlet</servlet-name>
+    <url-pattern>/_ah/spi/*</url-pattern>
+  </servlet-mapping>
+
+</web-app>

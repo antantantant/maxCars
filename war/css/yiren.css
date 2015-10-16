@@ -1,185 +1,380 @@
-body {
-	font-family: 'MyriadProLight', arial,sans-serif;
-	font-size:14pt;
-	font-weight:normal;
-	overflow-x: auto;
-	overflow-y: scroll;
+/*************************** DESKTOP *********************************/
+/*********************************************************************/
+@media screen and (min-width: 1024px) {
+    body {
+        font-family: 'MyriadProRegular', arial,sans-serif;
+        font-size:16pt;
+        font-weight:normal;
+    /*    overflow: hidden;*/
+        overflow-x: auto;
+        overflow-y: scroll;
+    }
+    a {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    ul{
+        color: #000000;
+        text-decoration: none;
+        list-style: none;
+        padding-left: 0px;
+        margin: 0px;
+    }
+
+    .links, .links:link, .links:visited{
+        color: #000000;
+        text-decoration: none;
+        -webkit-transition: background-color 0.5s ease;
+        -moz-transition: background-color 0.5s ease;
+        border-bottom: 1px black dotted;
+    }
+
+    .links:hover{
+        background-color: rgba(255,255,0,0.5);
+    }
+
+    .highlight_font, .highlight_font:link, .highlight_font.visited {
+        font-family: 'MyriadProRegular', arial,sans-serif;
+        font-size: 100%;
+        font-weight: 800;
+        text-align:left;
+        color: #000000;
+        text-decoration: none;
+        -webkit-transition: background-color 0.5s ease;
+        -moz-transition: background-color 0.5s ease;
+        background: url("../images/block.png") no-repeat left transparent;
+        padding-left: 20px;
+    }
+
+    .title{
+        font-family: 'MyriadProRegular', arial,sans-serif;
+        font-size: 120%;
+        color: #ffffff;
+        background-color: #000000;
+    }
+
+    /*************************** DIV CSS *********************************/
+    #page {
+        position: fixed;
+        top: 0px;
+        bottom: 100px;
+        width: 1000px;
+        left: 0px;
+        right: 0px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+        #side {
+            position: absolute;
+            top: 50px;
+            bottom: 0px;
+            left: 0px;
+            width: 250px;
+            height: 100%;
+            text-align: left;
+            margin-right: 20px; 
+        }
+            #myphoto {
+                margin-bottom: 10px;
+            }
+            #title {
+                font-size: 120%;
+                margin-bottom: 10px;
+            }
+            #info {
+                font-size: 80%;
+                margin-bottom: 10px;
+            }
+            #menu {
+                font-size: 120%;
+                margin-bottom: 10px;
+            }
+            #footnote{
+                position: fixed;
+                bottom:50px;
+                font-size: 90%;
+            }
+        #content_wrap{
+            position: absolute;
+    /*        overflow: hidden;*/
+            top: 50px;
+            left: 270px;
+            width: 730px;
+            height: 100%;
+            text-align: left;
+        }
+        #content{
+            height: 99%;
+            width: 100%;
+    /*        overflow: auto;*/
+        }
+            #announcement{
+                top: 0px;
+                width: 100%;
+                z-index: 99;
+                border-top: thick solid #ffaaaa;
+                border-bottom: thick solid #ffaaaa;
+                margin-bottom: 50px;
+                font-size: 80%;
+            }
+            #me {
+                width: 100%;
+                margin-bottom: 50px;
+                font-size: 80%;
+                font-family: 'MyriadProRegular', arial,sans-serif;
+            }
+            #mywork{
+
+            }
+                #section{
+                    font-size: 80%;
+                    padding-bottom: 5px;
+                    border-top: 2px solid black;
+                    border-bottom: 2px solid black;
+                    margin-bottom: 50px;
+                    -webkit-transition: background-color 0.5s ease;
+                    -moz-transition: background-color 0.5s ease;
+                }
+                #section:hover{
+                    background-color: rgba(255,255,0,0.2);
+                }
+
+
+
+    /*************************** PUBLICATION CSS *********************************/
+            #publication {
+                font-size: 80%;
+            }
+
+    /*************************** TEACHING CSS *********************************/
+            #statement {
+                font-size: 80%;
+            }
 }
 
-a {
-	text-decoration: none;
-	color: #000000;
+
+/*************************** MOBILE *********************************/
+/********************************************************************/
+@media screen and (max-width: 1023px) {
+    body {
+        font-family: 'MyriadProRegular', arial,sans-serif;
+        font-size:12pt;
+        font-weight:normal;
+    /*    overflow: hidden;*/
+        overflow-x: auto;
+        overflow-y: scroll;
+    }
+    a {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    ul{
+        color: #000000;
+        text-decoration: none;
+        list-style: none;
+        padding-left: 0px;
+        margin: 0px;
+    }
+
+    .links, .links:link, .links:visited{
+        color: #000000;
+        text-decoration: none;
+        -webkit-transition: background-color 0.5s ease;
+        -moz-transition: background-color 0.5s ease;
+        border-bottom: 1px black dotted;
+    }
+
+    .links:hover{
+        background-color: rgba(255,255,0,0.5);
+    }
+
+    .highlight_font, .highlight_font:link, .highlight_font.visited {
+        font-family: 'MyriadProRegular', arial,sans-serif;
+        font-size: 100%;
+        font-weight: 800;
+        text-align:left;
+        color: #000000;
+        text-decoration: none;
+        -webkit-transition: background-color 0.5s ease;
+        -moz-transition: background-color 0.5s ease;
+        background: url("../images/block.png") no-repeat left transparent;
+        background-size: 10px;
+        padding-left: 15px;
+    }
+
+    .title{
+        font-family: 'MyriadProRegular', arial,sans-serif;
+        font-size: 120%;
+        color: #ffffff;
+        background-color: #000000;
+    }
+
+    /*************************** DIV CSS *********************************/
+    img{
+        max-width: 80%; /* you can use % */
+        height: auto;
+    }
+    li{
+        font-size: 120%;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    #page {
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        width: 320px;
+        left: 0px;
+        right: 0px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+        #side {
+            position: absolute;
+            top: 10px;
+            bottom: 0px;
+            left: 0px;
+            width: 100px;
+            height: 100%;
+            text-align: left;
+            margin-right: 5px; 
+        }
+            #myphoto {
+                margin-bottom: 5px;
+            }
+            #title {
+                font-size: 100%;
+                margin-bottom: 5px;
+            }
+            #info {
+                font-size: 60%;
+                margin-bottom: 5px;
+            }
+            #menu {
+                font-size: 100%;
+                margin-bottom: 5px;
+            }
+            #footnote{
+                position: fixed;
+                bottom:50px;
+                font-size: 90%;
+            }
+        #content_wrap{
+            position: absolute;
+    /*        overflow: hidden;*/
+            top: 10px;
+            left: 105px;
+            width: 215px;
+            height: 100%;
+            text-align: left;
+        }
+        #content{
+            height: 99%;
+            width: 100%;
+    /*        overflow: auto;*/
+        }
+            #announcement{
+                top: 0px;
+                width: 100%;
+                z-index: 99;
+                border-top: thick solid #ffaaaa;
+                border-bottom: thick solid #ffaaaa;
+                margin-bottom: 10px;
+                font-size: 80%;
+            }
+            #me {
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 80%;
+                font-family: 'MyriadProRegular', arial,sans-serif;
+            }
+            #mywork{
+
+            }
+                #section{
+                    font-size: 80%;
+                    padding-bottom: 5px;
+                    border-top: 2px solid black;
+                    border-bottom: 2px solid black;
+                    margin-bottom: 10px;
+                    -webkit-transition: background-color 0.5s ease;
+                    -moz-transition: background-color 0.5s ease;
+                }
+                #section:hover{
+                    background-color: rgba(255,255,0,0.2);
+                }
+
+
+
+    /*************************** PUBLICATION CSS *********************************/
+            #publication {
+                font-size: 80%;
+            }
+
+    /*************************** TEACHING CSS *********************************/
+            #statement {
+                font-size: 80%;
+            }
 }
 
-ul{
-	color: #000000;
-	text-decoration: none;
-	list-style: none;
-	padding-left: 0px;
-	margin: 0px;
-}
 
-.links, .links:link, .links:visited{
-	color: #000077;
-	text-decoration: none;
-	-webkit-transition: background-color 0.5s ease;
-	-moz-transition: background-color 0.5s ease;
+/*************************** NANOSCROLLBAR CSS *********************************/
+/** initial setup **/
+.nano {
+  position : relative;
+  width    : 100%;
+  height   : 100%;
+  overflow : hidden;
 }
-
-.links:hover{
-	background-color: rgba(255,255,0,0.5);
+.nano > .nano-content {
+  position      : absolute;
+  overflow      : scroll;
+  overflow-x    : hidden;
+  top           : 0;
+  right         : 0;
+  bottom        : 0;
+  left          : 0;
 }
-
-#side {
-	position: fixed;
-	top: 20px;
-	left: 100px;
-	width: 210px;
-	height: 550px;
-	text-align: left;
-	margin-right: 40px; 
+.nano > .nano-content:focus {
+  outline: thin dotted;
 }
-
-#title {
-	font-size: 30pt;
-	margin-bottom: 10px;
+.nano > .nano-content::-webkit-scrollbar {
+  display: none;
 }
-
-#info {
-	font-size: 10pt;
-	margin-bottom: 10px;
+.has-scrollbar > .nano-content::-webkit-scrollbar {
+  display: block;
 }
-
-#footnote{
-	position: fixed;
-	bottom:50px;
-	left: 100px;
-	width: 210px;
-	font-size: 10pt;
-	margin-right: 40px; 
+.nano > .nano-pane {
+  background : rgba(0,0,0,.25);
+  position   : absolute;
+  width      : 10px;
+  right      : 0;
+  top        : 0;
+  bottom     : 0;
+  visibility : hidden\9; /* Target only IE7 and IE8 with this hack */
+  opacity    : .01;
+  -webkit-transition    : .2s;
+  -moz-transition       : .2s;
+  -o-transition         : .2s;
+  transition            : .2s;
+  -moz-border-radius    : 5px;
+  -webkit-border-radius : 5px;
+  border-radius         : 5px;
 }
-
-#content{
-	position: absolute;
-	top: 0px;
-	left: 350px;
-	width: 600px;
-	height: 550px;
-	text-align: left;
+.nano > .nano-pane > .nano-slider {
+  background: #444;
+  background: rgba(0,0,0,.5);
+  position              : relative;
+  margin                : 0 1px;
+  -moz-border-radius    : 3px;
+  -webkit-border-radius : 3px;
+  border-radius         : 3px;
 }
-
-#headline{
-	position: fixed;
-	width: 100%;
-	height:30px;
-	background: #ffffff;
-	text-align: center;
-	font-family: 'MyriadProRegular', arial,sans-serif;
-	margin: 0px;
-	padding-top: 20px;
-	z-index: 99;
-}
-
-#headline ul a{
-	display: block;
-	padding-right: 52px;
-	padding-left: 52px;
-}
-
-#headline li{
-	float: left;
-}
-
-#headline .selected{
-	background-color: #000000;
-	color: #ffffff;
-}
-
-#headline .unselected{
-	color: #999999;
-}
-
-.myphoto {
-	position: absolute;
-	left: 520px;
-	top: 55px;
-	float: right;
-	margin-left: 20px;
-}
-
-#me {
-	position: absolute;
-	top: 55px;
-	width: 520px;
-	font-size: 12pt;
-}
-
-#cv {
-}
-
-#mywork{
-	position: relative;
-	top:200px;
-	left: 0px;
-	text-align: left;
-}
-
-.highlight_font, .highlight_font:link, .highlight_font.visited {
-	font-family: 'MyriadProRegular', arial,sans-serif;
-	font-size: 14pt;
-	text-align:left;
-	color: #000000;
-	text-decoration: none;
-	-webkit-transition: background-color 0.5s ease;
-	-moz-transition: background-color 0.5s ease;
-}
-
-.highlight_font:hover{
-	background-color: rgba(255,255,0,0.5);
-}
-
-#mywork .des{
-	position: relative;
-	font-size: 12pt;
-	left: 0px;
-	width: 450px;
-}
-
-#mywork .des_pic{
-	position: relative;
-	left:0px;
-	width:90px;
-	margin:0px;
-}
-
-#mywork .tbl{
-	margin-top: 1.0em;
-	border-collapse: collapse;
-	padding: 0px;
-}
-#mywork .tbl td{
-	vertical-align:top;
-	padding-right: 10px;
-}
-
-#publication {
-	position: absolute;
-	top: 55px;
-}
-
-#aboutme tr{
-	vertical-align: top;
-}
-#aboutme p{
-	width: 450px;
-}
-
-#aboutme td{
-	vertical-align:top;
-	padding-right: 10px;	
-}
-
-#statement {
-	position:absolute;
-	top: 50px;
+.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {
+  visibility : visible\9; /* Target only IE7 and IE8 with this hack */
+  opacity    : 0.99;
 }

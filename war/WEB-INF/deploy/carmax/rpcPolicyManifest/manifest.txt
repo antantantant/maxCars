@@ -1,0 +1,3 @@
+# Module carmax
+# RPC service class, partial path of RPC policy file
+com.carMax.client.GreetingService, 497A817E0118B5547E3699A1DBB8978B.gwt.rpc
